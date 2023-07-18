@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Todo List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Ubuntu:wght@400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <h1>SCHEDULE MANAGER</h1>
+    <!-- Empty Space (only on desktop) -->
+    <div class="Empty Space"></div>
+
+    <!-- Header Todo List for today -->
+
+    <div class="parent">
+        <form id="taskForm">
+            <input type="text" id="enter_task" placeholder="Enter the task to be done"><br>
+            <input type="submit" class='task_submit' value="Add Task">
+            <button id="save_data" type="button">Save data</button>
+        </form>
+    </div>
+    <!-- Display Task -->
+    <div id="displayTask">
+        <!-- <div class="task">
+            <div> Task </div>
+            <button> Edit </button>
+            <button> Delete </button>
+        </div>
+        <div class="task">
+            <div> Task </div>
+            <button> Edit </button>
+            <button> Delete </button>
+        </div>
+        <div class="task">
+            <div> Task </div>
+            <button> Edit </button>
+            <button> Delete </button>
+        </div> -->
+    </div>
+
+    <script src="todo.js"></script>
+
+</body>
+
+</html>

@@ -33,15 +33,31 @@ function deleteEle(id) {
 
 }
 
+function alignTaskContent(task_main, task_content) {
+  var l = task_content.innerText.split('\n').length;
+
+  if (l < 2) {
+    task_main.style.height = "40px";
+    task_content.style.overflow = "none";
+  }
+  else if (l > 1 && l < 5) {
+    task_main.style.height = "fit-content";
+  } else {
+    task_main.style.height = "100px";
+    task_content.style.overflow = "auto";
+    task_content.style.marginRight = '0';
+  }
+}
+
 function editEle(id) {
 
   task_content = document.getElementById(`content_${id}`);
   task_content.contentEditable = !task_content.isContentEditable;
-  task = document.getElementById(`task_${id}`);
+  task_main = document.getElementById(`task_${id}`);
   task_edit_button = document.getElementById(`edit_${id}`);
 
   if (task_edit_button.textContent == 'Edit') {
-    task.style.height = "100px";
+    task_main.style.height = "100px";
     task_content.style.overflow = "auto";
     task_edit_button.style.background = "linear-gradient(to right, #6effab, #00cc76)";
     task_edit_button.textContent = 'Save';
@@ -56,21 +72,21 @@ function editEle(id) {
       }
     }
 
-    var l = task_content.innerText.split('\n').length;
+    alignTaskContent(task_main,task_content);
 
+    // var l = task_content.innerText.split('\n').length;
 
-
-    if (l < 2) {
-      task.style.height = "40px";
-      task_content.style.overflow = "none";
-    }
-    else if (l > 1 && l < 5) {
-      task.style.height = "fit-content";
-    } else {
-      task.style.height = "100px";
-      task_content.style.overflow = "auto";
-      task_content.style.marginRight = '0';
-    }
+    // if (l < 2) {
+    //   task_main.style.height = "40px";
+    //   task_content.style.overflow = "none";
+    // }
+    // else if (l > 1 && l < 5) {
+    //   task_main.style.height = "fit-content";
+    // } else {
+    //   task_main.style.height = "100px";
+    //   task_content.style.overflow = "auto";
+    //   task_content.style.marginRight = '0';
+    // }
   }
   task_edit_button.style.webkitBackgroundClip = "text";
   task_edit_button.style.webkitTextFillColor = "transparent";
@@ -78,45 +94,40 @@ function editEle(id) {
 
 function displayEle(task) {
 
-  // try{
-  //   console.log(task.id);
-  // }catch{
-  //   console.log(task);
-  // }
-
-  task_container = document.createElement('div');
-  task_container.classList.add('task');
-  task_container.id = `task_${task.id}`;
-
-  task_content = document.createElement('div');
-  task_content.classList.add('task_content');
-  task_content.id = `content_${task.id}`;
-  task_content.textContent = task.title;
-
-  if (task_content.offsetHeight > 40 && task_content.offsetHeight < 100) {
-    task_content.height = '100px'
+  function div_class_id_content(div_, class_, id_, content_) {
+    element = document.createElement(div_);
+    element.classList.add(class_);
+    element.id = id_;
+    element.innerText = content_;
+    return element;
   }
 
-  if (task_content.offsetHeight > 99) {
-    task_content.height = '100px'
-    task_content.style.overflow = "auto";
-    task_content.style.marginRight = '0';
-  }
-
-  task_edit_button = document.createElement('button');
-  task_edit_button.classList.add('task_edit_button');
-  task_edit_button.id = `edit_${task.id}`;
-  task_edit_button.textContent = 'Edit';
-
-  task_delete_button = document.createElement('button');
-  task_delete_button.classList.add('task_delete_button');
-  task_delete_button.id = `delete_${task.id}`;
-  task_delete_button.textContent = 'Delete';
+  task_parent = div_class_id_content('div', 'task', `task_${task.id}`, '');
+  task_container = div_class_id_content('div', 'task_field', `task_field_${task.id}`, '');
+  console.log(task.title);
+  task_content = div_class_id_content('div', 'task_content', `content_${task.id}`, task.title);
+  task_edit_button = div_class_id_content('button', 'task_edit_button', `edit_${task.id}`, 'Edit');
+  task_delete_button = div_class_id_content('button', 'task_delete_button', `delete_${task.id}`, 'Delete');
 
   task_container.appendChild(task_content);
   task_container.appendChild(task_edit_button);
   task_container.appendChild(task_delete_button);
-  displayTasks.appendChild(task_container);
+  task_parent.appendChild(task_container);
+
+  task_status = div_class_id_content('div', 'task_status', `task_status_${task.id}`, '');
+  task_status_content = div_class_id_content('div', 'task_status_content', `task_status_content_${task.id}`, 'Task Status : ');
+
+  task_status_tick = div_class_id_content('button', 'task_status_tick', `tick_${task.id}`, '✔');
+  task_status_cross = div_class_id_content('button', 'task_status_cross', `cross_${task.id}`, '🗙');
+
+  task_status.appendChild(task_status_content);
+  task_status.appendChild(task_status_tick);
+  task_status.appendChild(task_status_cross);
+  task_parent.appendChild(task_status);
+
+  displayTasks.appendChild(task_parent);
+
+  alignTaskContent(task_container,task_content);
 
   task_delete_button.addEventListener("click", (e) => {
     deleteEle(task.id);

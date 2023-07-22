@@ -47,7 +47,7 @@
                         <div for="priority">Priority</div>
                         <select id="priority">
                             <option value="High">High</option>
-                            <option value="Medium">Medium</option>
+                            <option value="Medium" selected>Medium</option>
                             <option value="Low">Low</option>
                         </select>
                     </div>
@@ -89,89 +89,9 @@
             <div class="textarea_flex">
                 <textarea type="text" class="text_area" id="text_area_subtasks"
                     placeholder="Enter the subtasks"></textarea>
-                <button>✔</button>
+                <button id="submit_subtask">✔</button>
             </div>
             <div class="subtasks">
-                <div class="subtasks_content">
-                    <!-- <div>Content Content Content Content Content Content Content Content Content Content Content Content</div> -->
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <!-- <div>Content Content Content Content Content Content Content Content Content Content Content Content</div> -->
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <!-- <div>Content Content Content Content Content Content Content Content Content Content Content Content</div> -->
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <!-- <div>Content Content Content Content Content Content Content Content Content Content Content Content</div> -->
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <!-- <div>Content Content Content Content Content Content Content Content Content Content Content Content</div> -->
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
-                <div class="subtasks_content">
-                    <div>Content</div>
-                    <button>Edit</button>
-                    <button>Remove</button>
-                </div>
             </div>
             <button class="submit_subtasks">Done</button>
         </div>
@@ -182,9 +102,74 @@
     </div>
     <div class="completed"></div>
 
-    <div>
-        <div>Search</div>
-    </div>
+    <!-- 
+    <form id="taskForm">
+        <textarea type="text" class="text_area" id="enter_task"
+            placeholder="Enter the task/subtask to be searched"></textarea>
+
+        <div class="form_data">
+            <div class="form_line_1">
+                <div class="input_portion">
+                    <div for="category">Filter Category</div>
+                    <select id="category">
+                        <option value="Personal">Personal</option>
+                        <option value="Work">Work</option>
+                        <option value="Home">Home</option>
+                        <option value="Family">Family</option>
+                        <option value="Health">Health</option>
+                        <option value="Self-growth">Self-growth</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Social">Social</option>
+                        <option value="Other" selected>Other</option>
+                    </select>
+                </div>
+
+                <div class="input_portion">
+                    <div for="priority">Filter Priority</div>
+                    <select id="priority">
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+
+                <div class="input_portion">
+                    <div for="datePicker">Filter Date</div>
+                    <input type="date" id="datePicker">
+                </div>
+
+                <div class="input_portion">
+                    <div for="timePicker">Filter Time</div>
+                    <input type="time" id="timePicker">
+                </div>
+            </div>
+        </div>
+
+        <div class="tag_container">
+            <div class="input_portion">
+                <div style="display: flex;">
+                    <input type="text" id="tag_text" placeholder="Search Tags">
+                    <button id="tag_button">✔</button>
+                </div>
+            </div>
+            <div class="tag_display">The searched tags will appear here</div>
+        </div>
+
+        <div class="save_submit">
+            <button id="save_data" class='task_submit' type="button">Backlog</button>
+            <input type="submit" class='task_submit' value="Search">
+        </div>
+
+        <div class="save_submit">
+            <button id="save_data" class='task_submit' type="button">Priority</button>
+            <button id="save_data" class='task_submit' type="button">DateTime</button>
+            <button id="save_data" class='task_submit' type="button">Category </button>
+            <button id="activity_logs" class='task_submit' type="button">Sort</button>
+        </div>
+
+
+    </form> -->
 
     <!-- Display Task -->
     <div id="displayTask">

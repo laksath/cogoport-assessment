@@ -75,7 +75,7 @@ h1 {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 3px;
+    margin-top: 5px;
 }
 
 .form_line_1 {
@@ -97,7 +97,6 @@ input {
 }
 
 .input_portion div {
-    height: 40px;
     font-size: 20px;
     font-family: "PT sans", sans-serif;
     font-weight: bold;
@@ -574,21 +573,21 @@ option {
     overflow: auto;
 }
 
-.subtasks_content {
+.subtask_bar {
     width: 90%;
     display: flex;
     justify-content: right;
     margin-bottom: 10px;
 }
 
-.subtasks_content div {
+.subtask_bar div {
     width: 50%;
     color: #fff;
     font-size: 20px;
     font-family: "PT sans", sans-serif;
 }
 
-.subtasks_content button {
+.subtask_bar button {
     height: fit-content;
     color: #fff;
     font-size: 20px;
@@ -613,6 +612,7 @@ option {
     border: none;
     padding: none;
     background: rgba(47, 47, 47, 0.5);
+    cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -636,21 +636,23 @@ option {
         height: 60%;
     }
 
-    .subtasks_content {
+    .subtask_bar {
         width: 90%;
         display: flex;
         margin-left: 15px;
         margin-bottom: 5px;
     }
 
-    .subtasks_content div {
+    .subtask_bar div {
         width: 50%;
         color: #fff;
         font-size: 10px;
         font-family: "PT sans", sans-serif;
+        border: none;
+        border-radius: 5px;
     }
 
-    .subtasks_content button {
+    .subtask_bar button {
         font-size: 10px;
         width: 20%;
     }

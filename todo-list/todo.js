@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function () {
   timePicker.value = '23:59';
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //Tick is triggered when enter is pressed inside tag field
 //Tags are appended to the tags text field
-
 const tag_text = document.getElementById('tag_text');
 const tag_button = document.getElementById('tag_button');
 const tag_display = document.getElementsByClassName('tag_display')[0];
-
 let tmp_tags = [];
 let tmp_tags_id = 1;
 
@@ -91,11 +91,16 @@ tag_text.addEventListener('keydown', function (event) {
   }
 });
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+let tmp_subtasks = [];
+let tmp_subtasks_id = 1;
 
 //Modal Code
 const openModalBtn = document.getElementById('openModalBtn');
 const modal = document.getElementById('myModal');
 const closeModalBtn = modal.querySelector('.close');
+const doneBtn = modal.querySelector('.submit_subtasks');
 
 function openModal() {
   modal.style.display = 'block';
@@ -112,9 +117,70 @@ window.addEventListener('click', (event) => {
     closeModal();
   }
 });
+doneBtn.addEventListener('click', function () { closeModal(); });
 
+text_area_subtasks = document.getElementById('text_area_subtasks');
+submit_subtask = document.getElementById('submit_subtask');
+subtasks = document.getElementsByClassName('subtasks')[0];
 
+function create_subtask_bars(subtask_content, subtask_id) {
+  const subtask_bar = div_class_id_content('div', 'subtask_bar', `subtask_bar_${subtask_id}`, '');
+  const subtask_bar_content = div_class_id_content('div', 'subtask_bar_content', `subtask_content_${subtask_id}`, subtask_content);
+  const subtask_bar_edit = div_class_id_content('button', 'subtask_bar_edit', `subtask_edit_${subtask_id}`, 'Edit');
+  const subtask_bar_delete = div_class_id_content('button', 'subtask_bar_delete', `subtask_delete_${subtask_id}`, 'Remove');
 
+  subtask_bar.appendChild(subtask_bar_content);
+  subtask_bar.appendChild(subtask_bar_edit);
+  subtask_bar.appendChild(subtask_bar_delete);
+  subtasks.appendChild(subtask_bar);
+}
+
+function editSubEle(tmp_subtasks, id) {
+  subtask_content_ = document.getElementById(`subtask_content_${id}`);
+  subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
+
+  if (subtask_bar_edit.innerText == 'Edit') {
+    subtask_bar_edit.innerText = 'Save';
+    subtask_content_.style.background = 'rgba(47, 47, 47, 0.5)'
+    subtask_content_.style.marginRight = '2px';
+    subtask_content_.style.border = '2px solid white';
+    subtask_content_.style.borderRadius = '5px';
+  } else {
+    subtask_bar_edit.innerText = 'Edit';
+    subtask_content_.style.background = 'none';
+    subtask_content_.style.marginRight = '0';
+    subtask_content_.style.border = 'none';
+    subtask_content_.style.borderRadius = 'none';
+
+    for (let i = 0; i < tmp_subtasks.length; i++) {
+      if (tmp_subtasks[i].id == id) {
+        tmp_subtasks[i].content = subtask_content_.innerText;
+      }
+    }
+  }
+  subtask_content_.contentEditable = !subtask_content_.isContentEditable;
+}
+submit_subtask.addEventListener('click', function () {
+  const subtask_string = text_area_subtasks.value;
+  if (subtask_string != '') {
+    const id = tmp_subtasks_id;
+    tmp_subtasks.push({ 'id': id, 'content': subtask_string });
+    create_subtask_bars(subtask_string, id);
+    text_area_subtasks.value = '';
+
+    subtask_bar_delete = document.getElementById(`subtask_delete_${id}`);
+    subtask_bar_delete.addEventListener('click', function (event) {
+      deleteEle(tmp_subtasks, id, 'subtask_bar_');
+    });
+
+    subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
+    subtask_bar_edit.addEventListener('click', function (event) {
+      editSubEle(tmp_subtasks, id);
+    });
+
+    tmp_subtasks_id++;
+  }
+});
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +188,7 @@ window.addEventListener('click', (event) => {
 
 
 let tasks = [];
-let categories = ['Personal', 'Work', 'Home', 'Family', 'Health', 'Self-growth', 'Finance', 'Travel ', 'Social ', 'Miscellaneous'];
+let categories = ['Personal', 'Work', 'Home', 'Family', 'Health', 'Self-growth', 'Finance', 'Travel ', 'Social ', 'Other'];
 let priority = ['Low', 'Medium', 'High'];
 var index = 1;
 let displayTasks = document.getElementById("displayTask")
@@ -132,6 +198,7 @@ function updateProgress() {
 
   let tmp_count = 0;
   for (i = 0; i < tasks.length; i++) if (tasks[i].completed == 1) tmp_count++;
+  // console.log(tmp_count);
 
   progress = tasks.length == 0 ? 0 : Math.round(tmp_count * 10000 / tasks.length) / 100;
 
@@ -153,18 +220,13 @@ function updateProgress() {
 
 function deleteEle(task_array, id, str) {
 
-  // tmp_array = task_array.filter(function (item) {
-  //   return item.id != id;
-  // });
-  // task_array = tmp_array;
-
-  for(let i=0;i<task_array.length;i++){
-    if(task_array[i].id==id){
+  for (let i = 0; i < task_array.length; i++) {
+    if (task_array[i].id == id) {
       task_array.splice(i, 1);
     }
   }
 
-  console.log(id,task_array);
+  console.log(id, task_array);
   removeEle = document.getElementById(str + id);
   removeEle.remove();
 }
@@ -253,22 +315,6 @@ function displayEle(task) {
   task_edit_button = div_class_id_content('button', 'task_edit_button', `edit_${task.id}`, 'Edit');
   task_delete_button = div_class_id_content('button', 'task_delete_button', `delete_${task.id}`, 'Delete');
 
-  // category
-  category_field = div_class_id_content('select', 'task_category', `task_category_${task.id}`, '');
-  categories.forEach(category => {
-    const option = document.createElement('option');
-    option.textContent = category;
-    category_field.appendChild(option);
-  });
-  const defaultOption = category_field.querySelector(`option[value="${task.category}"]`);
-  // defaultOption.selected
-
-  //due date
-  //priority
-  //filters
-  //tags
-
-
   task_status = div_class_id_content('div', 'task_status', `task_status_${task.id}`, '');
   task_status_content = div_class_id_content('div', 'task_status_content', `task_status_content_${task.id}`, 'Status');
   task_status_tick = div_class_id_content('button', 'task_status_tick', `tick_${task.id}`, '✔');
@@ -278,8 +324,6 @@ function displayEle(task) {
   task_field.appendChild(task_edit_button);
   task_field.appendChild(task_delete_button);
   task_parent.appendChild(task_field);
-
-  // task_parent.appendChild(category_field);
 
   task_status.appendChild(task_status_content);
   task_status.appendChild(task_status_tick);
@@ -299,15 +343,28 @@ function displayEle(task) {
 
 function addTask(task_value, ix) {
   if (ix == -1) {
-    tasks.push({ 'userId': 0, 'id': index, 'title': task_value, 'completed': false });
+    tasks.push(
+      {
+        'userId': 0,
+        'id': index,
+        'title': task_value[0],
+        'completed': false,
+        'category': task_value[1],
+        'priority': task_value[2],
+        'due_date': task_value[3],
+        'due_time': task_value[4],
+        'subtasks': subtasks,
+        'tags': tmp_tags,
+      });
   } else {
     task_value['category'] = 'Medium';
-    task_value['priority'] = 'Miscellaneous';
+    task_value['priority'] = 'Other';
 
     const currentDate = new Date();
     task_value['due_date'] = currentDate.toISOString().split('T')[0];
-    task_value['due_time'] = '23:59:59';
-    task_value['subtaks'] = [];
+    task_value['due_time'] = '23:59';
+    task_value['subtasks'] = [];
+    task_value['tags'] = [];
     tasks.push(task_value);
     index;
   }
@@ -316,24 +373,35 @@ function addTask(task_value, ix) {
   taskEventListeners(tasks[tasks.length - 1]);
 }
 
-// let tag_text = document.getElementById("taskForm");
-
 let taskForm = document.getElementById("taskForm");
 taskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let enter_task = document.getElementById("enter_task");
+  let enter_category = document.getElementById("category");
+  let enter_priority = document.getElementById("priority");
+  let enter_datePicker = document.getElementById("datePicker");
+  let enter_timePicker = document.getElementById("timePicker");
 
-  console.log(document.getElementById("category").value);
-  console.log(document.getElementById("priority").value);
-  console.log(document.getElementById("datePicker").value);
-  console.log(document.getElementById("timePicker").value);
+  let info_array = [
+    enter_task.value,
+    enter_category.value,
+    enter_priority.value,
+    enter_datePicker.value,
+    enter_timePicker.value,
+  ]
 
 
   if (enter_task.value == "") {
     console.log("Ensure you input a valid task !");
   } else {
-    addTask(enter_task.value, -1);
+    addTask(info_array, -1);
+    console.log(info_array);
     enter_task.value = '';
+    enter_category.value = 'Other';
+    enter_priority.value = 'Medium';
+    const today = new Date().toISOString().slice(0, 10);
+    enter_datePicker.value = today;
+    enter_timePicker.value = '23:59';
   }
 });
 
@@ -354,7 +422,6 @@ async function getapi(url) {
 
     if (tasks.length == 0) {
       ix = data.length;
-      console.log(`data len:${ix}`);
       for (let i = 0; i < ix; i++) {
         addTask(data[i], 1);
       }
@@ -364,21 +431,21 @@ async function getapi(url) {
   }
 }
 
-// getapi("https://jsonplaceholder.typicode.com/todos");
-const storedArrayJson = localStorage.getItem('task_data');
-const storedArray = JSON.parse(storedArrayJson);
+getapi("https://jsonplaceholder.typicode.com/todos");
+// const storedArrayJson = localStorage.getItem('task_data');
+// const storedArray = JSON.parse(storedArrayJson);
 
-if (storedArray == null) {
-  getapi("https://jsonplaceholder.typicode.com/todos");
-} else {
-  const storedIntegerString = localStorage.getItem('index');
-  index = parseInt(storedIntegerString);
-  tasks = storedArray;
-  // console.log(tasks);
-  for (let i = 0; i < tasks.length; i++) {
-    displayEle(tasks[i]);
-    taskEventListeners(tasks[i]);
-  }
-}
+// if (storedArray == null) {
+//   getapi("https://jsonplaceholder.typicode.com/todos");
+// } else {
+//   const storedIntegerString = localStorage.getItem('index');
+//   index = parseInt(storedIntegerString);
+//   tasks = storedArray;
+//   // console.log(tasks);
+//   for (let i = 0; i < tasks.length; i++) {
+//     displayEle(tasks[i]);
+//     taskEventListeners(tasks[i]);
+//   }
+// }
 
 updateProgress();

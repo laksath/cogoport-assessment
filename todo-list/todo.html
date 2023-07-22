@@ -18,17 +18,54 @@
 
     <h1>SCHEDULE MANAGER ❌✔️</h1>
     <!-- Empty Space (only on desktop) -->
-    <div class="Empty Space"></div>
 
     <!-- Header Todo List for today -->
 
     <div class="parent">
         <form id="taskForm">
-            <input type="text" id="enter_task" placeholder="Enter the task to be done"><br>
+            <textarea type="text" id="enter_task" placeholder="Enter the task to be done"></textarea>
+
+            <div class="dd">
+                <label for="category">Category:</label>
+                <select>
+                    <option value="Personal">Personal</option>
+                    <option value="Work">Work</option>
+                    <option value="Home">Home</option>
+                    <option value="Family">Family</option>
+                    <option value="Health">Health</option>
+                    <option value="Self-growth">Self-growth</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Social">Social</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
+                </select>
+            </div>
+
+            <div class="dd">
+                <label for="priority">Priority:</label>
+                <select>
+                    <option value="optionA">High</option>
+                    <option value="optionB">Medium</option>
+                    <option value="optionC">Low</option>
+                </select>
+            </div>
+
+            <div class="dd">
+                <label for="datetimePicker">Date-Time Picker:</label>
+                <input type="datetime-local">
+            </div>
+
+
             <input type="submit" class='task_submit' value="Add Task">
             <button id="save_data" type="button">Save data</button>
         </form>
     </div>
+
+    <div class="progress-bar">
+        <div class="progress"></div>
+    </div>
+    <div class="completed"></div>
+
     <!-- Display Task -->
     <div id="displayTask">
         <!-- <div class="task">

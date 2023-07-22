@@ -1,13 +1,131 @@
+//general code to create new elements
+function div_class_id_content(div_, class_, id_, content_) {
+  element = document.createElement(div_);
+  element.classList.add(class_);
+  element.id = id_;
+  element.innerText = content_;
+  return element;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Code for text area
+const textarea = document.getElementById('enter_task');
+function resizeTextarea() {
+  const maxRows = 6;
+  textarea.rows = 1;
+  const rowsToSet = Math.min(maxRows, textarea.scrollHeight / 20); // Adjust this value as needed for row height
+  textarea.rows = rowsToSet;
+  textarea.style.overflowY = rowsToSet > maxRows ? 'scroll' : 'hidden';
+}
+textarea.addEventListener('input', resizeTextarea);
+
+//Default date and time
+document.addEventListener('DOMContentLoaded', function () {
+  const datePicker = document.getElementById('datePicker');
+  const today = new Date().toISOString().slice(0, 10);
+  datePicker.value = today;
+
+  const timePicker = document.getElementById('timePicker');
+  timePicker.value = '23:59';
+});
+
+//Tick is triggered when enter is pressed inside tag field
+//Tags are appended to the tags text field
+
+const tag_text = document.getElementById('tag_text');
+const tag_button = document.getElementById('tag_button');
+const tag_display = document.getElementsByClassName('tag_display')[0];
+
+let tmp_tags = [];
+let tmp_tags_id = 1;
+
+function create_tag_bars(tag_content, tag_id) {
+  const tag_bar = div_class_id_content('div', 'tag_bar', `tag_bar_${tag_id}`, '');
+  const tag_bar_content = div_class_id_content('div', 'tag_bar_content', `tag_content_${tag_id}`, tag_content);
+  const tag_bar_delete = div_class_id_content('div', 'tag_bar_delete', `tag_delete_${tag_id}`, 'x');
+
+  tag_bar.appendChild(tag_bar_content);
+  tag_bar.appendChild(tag_bar_delete);
+  tag_display.appendChild(tag_bar);
+}
+
+function check_text_display() {
+  if (tmp_tags.length != 0) {
+    tag_display.firstChild.textContent = '';
+    tag_display.style.alignItems = 'stretch';
+    tag_display.style.justifyContent = 'flex-start';
+  } else {
+    tag_display.firstChild.textContent = 'The tags will appear here';
+    tag_display.style.alignItems = 'center';
+    tag_display.style.justifyContent = 'center';
+  }
+}
+
+tag_button.addEventListener('click', function (event) {
+  event.preventDefault();
+
+  let tag_text_val = tag_text.value.replace(/ /g, '_');
+
+  if (tag_text_val != '') {
+    const id = tmp_tags_id;
+    tag_text_val = `#${tag_text_val}`;
+    tmp_tags.push({ 'id': id, 'content': tag_text_val });
+    create_tag_bars(tag_text_val, id);
+    const tag_bar_delete = document.getElementById(`tag_delete_${id}`);
+    tag_bar_delete.addEventListener('click', function (event) {
+      deleteEle(tmp_tags, id, 'tag_bar_');
+      check_text_display();
+    });
+    tmp_tags_id++;
+  }
+
+  check_text_display();
+  tag_text.value = '';
+});
+
+tag_text.addEventListener('keydown', function (event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    tag_button.click();
+  }
+});
+
+
+//Modal Code
+const openModalBtn = document.getElementById('openModalBtn');
+const modal = document.getElementById('myModal');
+const closeModalBtn = modal.querySelector('.close');
+
+function openModal() {
+  modal.style.display = 'block';
+}
+
+function closeModal() {
+  modal.style.display = 'none';
+}
+
+openModalBtn.addEventListener('click', openModal);
+closeModalBtn.addEventListener('click', closeModal);
+window.addEventListener('click', (event) => {
+  if (event.target === modal) {
+    closeModal();
+  }
+});
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 let tasks = [];
 let categories = ['Personal', 'Work', 'Home', 'Family', 'Health', 'Self-growth', 'Finance', 'Travel ', 'Social ', 'Miscellaneous'];
 let priority = ['Low', 'Medium', 'High'];
 var index = 1;
 let displayTasks = document.getElementById("displayTask")
-let taskForm = document.getElementById("taskForm");
-
-function dueDate() {
-
-}
 
 
 function updateProgress() {
@@ -21,10 +139,8 @@ function updateProgress() {
   progressBar.style.width = progress + '%';
 
   const completed = document.querySelector('.completed');
-  // completed.innerText = `Completed : ${progress}% (${tmp_count}/${tasks.length})`;
 
   let SPEED = 40;
-  // Retrieve the percentage value
   let limit = Math.floor(progress);
 
   for (let i = 0; i <= limit; i++) {
@@ -35,13 +151,21 @@ function updateProgress() {
   setTimeout(function () { completed.innerText = `Completed : ${progress}% (${tmp_count}/${tasks.length})`; }, SPEED * (limit + 1));
 }
 
-function deleteEle(id) {
+function deleteEle(task_array, id, str) {
 
-  tasks = tasks.filter(function (item) {
-    return item.id != id;
-  });
+  // tmp_array = task_array.filter(function (item) {
+  //   return item.id != id;
+  // });
+  // task_array = tmp_array;
 
-  removeEle = document.getElementById(`task_${id}`);
+  for(let i=0;i<task_array.length;i++){
+    if(task_array[i].id==id){
+      task_array.splice(i, 1);
+    }
+  }
+
+  console.log(id,task_array);
+  removeEle = document.getElementById(str + id);
   removeEle.remove();
 }
 
@@ -104,7 +228,7 @@ function strikethroughV2(taskToUpdate, status) {
 
 function taskEventListeners(task) {
   task_delete_button.addEventListener("click", (e) => {
-    deleteEle(task.id);
+    deleteEle(tasks, `${task.id}`, 'task_');
   });
 
   task_edit_button.addEventListener("click", (e) => {
@@ -121,14 +245,6 @@ function taskEventListeners(task) {
 }
 
 function displayEle(task) {
-
-  function div_class_id_content(div_, class_, id_, content_) {
-    element = document.createElement(div_);
-    element.classList.add(class_);
-    element.id = id_;
-    element.innerText = content_;
-    return element;
-  }
 
   task_parent = div_class_id_content('div', 'task', `task_${task.id}`, '');
 
@@ -163,7 +279,7 @@ function displayEle(task) {
   task_field.appendChild(task_delete_button);
   task_parent.appendChild(task_field);
 
-  task_parent.appendChild(category_field);
+  // task_parent.appendChild(category_field);
 
   task_status.appendChild(task_status_content);
   task_status.appendChild(task_status_tick);
@@ -200,9 +316,18 @@ function addTask(task_value, ix) {
   taskEventListeners(tasks[tasks.length - 1]);
 }
 
+// let tag_text = document.getElementById("taskForm");
+
+let taskForm = document.getElementById("taskForm");
 taskForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let enter_task = document.getElementById("enter_task");
+
+  console.log(document.getElementById("category").value);
+  console.log(document.getElementById("priority").value);
+  console.log(document.getElementById("datePicker").value);
+  console.log(document.getElementById("timePicker").value);
+
 
   if (enter_task.value == "") {
     console.log("Ensure you input a valid task !");

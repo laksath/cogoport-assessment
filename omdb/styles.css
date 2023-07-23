@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    padding: 20px;
+    border: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    width: calc(20% - 20px);
+    /* 5 cards per row on desktop */
+    margin-bottom: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+@media (max-width: 1024px) {
+    .card {
+        width: calc(33.33% - 20px);
+        /* 3 cards per row on tablet */
+    }
+}
+
+@media (max-width: 767px) {
+    .card {
+        width: calc(100% - 20px);
+        /* 1 card per row on mobile */
+    }
+}
+
+#prevBtn {
+    position: relative;
+    bottom: 0;
+}

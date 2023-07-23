@@ -609,13 +609,13 @@ search.addEventListener("click", (e) => {
     filtered_tasks = filtered_tasks.filter(item => item.category == fil_cat.value);
   }
   if (fil_pri.value != '') {
-    filtered_tasks = filtered_tasks.filter(item => item.category == fil_pri.value);
+    filtered_tasks = filtered_tasks.filter(item => item.priority == fil_pri.value);
   }
   if (fil_date.value != '') {
-    filtered_tasks = filtered_tasks.filter(item => item.category == fil_date.value);
+    filtered_tasks = filtered_tasks.filter(item => item.due_date == fil_date.value);
   }
   if (fil_time.value != '') {
-    filtered_tasks = filtered_tasks.filter(item => item.category == fil_time.value);
+    filtered_tasks = filtered_tasks.filter(item => item.due_time == fil_time.value);
   }
 
   console.log(filtered_tasks[0]);
@@ -634,6 +634,10 @@ search.addEventListener("click", (e) => {
     }catch (error){
       continue;
     }
+  }
+
+  for (i = 0; i < tasks.length; i++) {
+    addTask(tasks[i],1);
   }
 });
 

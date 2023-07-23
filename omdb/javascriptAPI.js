@@ -1,6 +1,8 @@
 const cardsContainer = document.getElementById('cards-container');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
+const currentPageInfo = document.getElementById('currentPageInfo');
+const searchHeadingElement = document.getElementById('searchHeading');
 
 const cardsPerPage = 10;
 
@@ -26,10 +28,13 @@ function fetchMovies(url) {
                 totalPages = Math.ceil(totalCards / cardsPerPage);
                 console.log(jsonObject);
                 console.log(`totalPages: ${totalPages}`);
+                currentPageInfo.textContent = `Showing Page ${currentPage} out of ${totalPages}`;
+
             } else {
+                currentPageInfo.textContent = `No results found for the name : ${searchHeading}`;
                 console.error(`Incorrect movie name : ${API_URL}`);
             }
-
+            searchHeadingElement.textContent = `Search results for "${searchHeading}"`;
             // updatePage();
             displayCards(currentPage);
         })
@@ -48,42 +53,27 @@ function displayCards(currentPage) {
         // const movie = movies[i]; backend
         const card = document.createElement('div');
         card.classList.add('card');
-        card.innerHTML = `
+
+        
+        if (movie_info[i].Poster == 'N/A') {
+            card.innerHTML = `
+            <img src="404.jpg" alt="${movie_info[i].Title}">
+            <h3>${movie_info[i].Title}</h3>
+        `;
+        } else {
+            card.innerHTML = `
             <img src="${movie_info[i].Poster}" alt="${movie_info[i].Title}">
             <h3>${movie_info[i].Title}</h3>
         `;
+        }
+
         cardsContainer.appendChild(card);
     }
 }
 
-// function displayCards(startIndex, endIndex) {
-//     cardsContainer.innerHTML = '';
-
-//     for (let i = startIndex; i < endIndex; i++) {
-//         const movie = movies[i];
-//         const card = document.createElement('div');
-//         card.classList.add('card');
-//         card.innerHTML = `
-//             <img src="${movie.poster}" alt="${movie.title}">
-//             <h3>${movie.title}</h3>
-//         `;
-//         cardsContainer.appendChild(card);
-//     }
-// }
-
-// function updatePage() {
-//     const startIndex = (currentPage - 1) * cardsPerPage.desktop;
-//     const endIndex = startIndex + cardsPerPage.desktop;
-//     displayCards(startIndex, endIndex);
-
-//     prevBtn.disabled = currentPage === 1;
-//     nextBtn.disabled = currentPage === totalPages;
-// }
-
 function prevPage() {
     if (currentPage > 1) {
         currentPage--;
-        // updatePage();
 
         API_URL = `https://www.omdbapi.com/?apikey=ecdc1686&type=movie&s=${searchHeading}&page=${currentPage}`;
         fetchMovies(API_URL);
@@ -94,7 +84,6 @@ function prevPage() {
 function nextPage() {
     if (currentPage < totalPages) {
         currentPage++;
-        // updatePage();
 
         API_URL = `https://www.omdbapi.com/?apikey=ecdc1686&type=movie&s=${searchHeading}&page=${currentPage}`;
         fetchMovies(API_URL);

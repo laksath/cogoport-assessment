@@ -22,12 +22,18 @@ body {
 }
 
 .card {
-    width: calc(20% - 20px);
-    /* 5 cards per row on desktop */
+    width: 20%;
     margin-bottom: 20px;
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
+    /* text-align: center; */
+    /* justify-content: space-around; */
+}
+
+.card img{
+    width: 100%;
+    margin: auto;
 }
 
 button {

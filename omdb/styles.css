@@ -45,7 +45,7 @@ body {
     border-radius: 5px;
     outline: none;
     transition: border-color 0.3s ease-in-out;
-    width: 70%; /* Adjust the width as needed */
+    width: 70%;
 }
 
 #searchInput::placeholder {
@@ -88,6 +88,36 @@ button:hover {
 #prevBtn {
     position: relative;
     bottom: 0;
+}
+
+
+.inputFields {
+    display: none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.user_input {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+    width: 80%;
+}
+
+textarea{
+    height: 100px;
+}
+
+
+#searchInput::placeholder {
+    color: #aaa;
+}
+
+#searchInput:focus {
+    border-color: #4CAF50;
 }
 
 .modal {

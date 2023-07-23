@@ -1,3 +1,19 @@
+comment_rating_data = {}
+loadData();
+
+function loadData() {
+    const jsonData = localStorage.getItem('mydata');
+    comment_rating_data = JSON.parse(jsonData);
+}
+
+if(comment_rating_data==null) comment_rating_data={};
+
+function saveData(data) {
+    const jsonData = JSON.stringify(data);
+    localStorage.setItem('mydata', jsonData);
+}
+
+
 const cardsContainer = document.getElementById('cards-container');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
@@ -45,8 +61,8 @@ function fetchMovies(url) {
         });
 }
 
-function fetchMovie(url) {
-    fetch(url)
+function fetchMovie(imdbID) {
+    fetch(`https://www.omdbapi.com/?apikey=ecdc1686&i=${imdbID}`)
         .then(response => response.json())
         .then(movie => {
             let htmlContent = `<h2>${movie.Title} (${movie.Year})</h2>`;
@@ -55,6 +71,11 @@ function fetchMovie(url) {
             htmlContent += `<p><strong>Genre:</strong> ${movie.Genre}</p>`;
             htmlContent += `<p><strong>Plot:</strong> ${movie.Plot}</p>`;
             htmlContent += `<p><strong>IMDb Rating:</strong> ${movie.imdbRating}</p>`;
+
+            if (comment_rating_data!=null && comment_rating_data[imdbID] != undefined) {
+                htmlContent += `<p><strong>Personal Rating:</strong> ${comment_rating_data[imdbID][0]}</p>`;
+                htmlContent += `<p><strong>Personal Comment:</strong> ${comment_rating_data[imdbID][1]}</p>`;
+            }
 
             modalContent.innerHTML = htmlContent;
             modal.style.display = 'block';
@@ -84,12 +105,22 @@ function displayCards(currentPage) {
             card.innerHTML = `
             <img src="404.jpg" alt="${movie_info[i].Title}">
             <h3>${movie_info[i].Title}</h3>
+            <button id="show_${movie_info[i].imdbID}" onclick="showRatingComment(${i})">Show</button>
+            <div class="inputFields" id="inputFields_${movie_info[i].imdbID}">
+                <input type="text" id="rating_${movie_info[i].imdbID}" class="user_input" placeholder="Rating (1-10)">
+                <textarea type="text" class="user_input" id="comment_${movie_info[i].imdbID}" placeholder="Comments"></textarea>
+            </div>
             <button onclick="showMovieDetails(${i})">Movie Details</button>
         `;
         } else {
             card.innerHTML = `
             <img src="${movie_info[i].Poster}" alt="${movie_info[i].Title}">
             <h3>${movie_info[i].Title}</h3>
+            <button id="show_${movie_info[i].imdbID}" onclick="showRatingComment(${i})">Show</button>
+            <div class="inputFields" id="inputFields_${movie_info[i].imdbID}">
+                <input type="text" id="rating_${movie_info[i].imdbID}" class="user_input" placeholder="Rating (1-10)">
+                <textarea type="text" class="user_input" id="comment_${movie_info[i].imdbID}" placeholder="Comments"></textarea>
+            </div>
             <button onclick="showMovieDetails(${i})">Movie Details</button>
         `;
         }
@@ -98,10 +129,40 @@ function displayCards(currentPage) {
     }
 }
 
+function showRatingComment(index) {
+    rating_button = document.getElementById(`show_${movie_info[index].imdbID}`);
+    text_fields = document.getElementById(`inputFields_${movie_info[index].imdbID}`);
+
+    rating_field = document.getElementById(`rating_${movie_info[index].imdbID}`);
+    comment_field = document.getElementById(`comment_${movie_info[index].imdbID}`);
+
+    if (comment_rating_data[movie_info[index].imdbID] != undefined) {
+        rating_field.value = comment_rating_data[movie_info[index].imdbID][0];
+        comment_field.value = comment_rating_data[movie_info[index].imdbID][1];
+    }
+
+    button_status = rating_button.innerText;
+    if (button_status == "Show") {
+        console.log(button_status);
+        rating_button.innerText = "Hide & Save";
+        text_fields.style.display = 'block';
+    } else {
+        rating_button.innerText = "Show";
+        text_fields.style.display = 'none';
+        
+        if (rating_field.value != '' || comment_field.value != '') {
+            comment_rating_data[movie_info[index].imdbID] = [rating_field.value, comment_field.value,];
+            console.log(comment_rating_data);
+            saveData(comment_rating_data);
+        }
+    }
+}
+
+
 function showMovieDetails(index) {
     const imdbID = movie_info[index].imdbID;
     let API_URL_LONG = `https://www.omdbapi.com/?apikey=ecdc1686&i=${imdbID}`;
-    fetchMovie(API_URL_LONG);
+    fetchMovie(imdbID);
 }
 
 function prevPage() {

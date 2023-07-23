@@ -308,6 +308,8 @@ function taskEventListeners(task) {
 
 function displayEle(task) {
 
+  task_grand_parent = div_class_id_content('div', 'task_grandpa', `task_grandpa_${task.id}`, '');
+
   task_parent = div_class_id_content('div', 'task', `task_${task.id}`, '');
 
   task_field = div_class_id_content('div', 'task_field', `task_field_${task.id}`, '');
@@ -330,7 +332,77 @@ function displayEle(task) {
   task_status.appendChild(task_status_cross);
   task_parent.appendChild(task_status);
 
-  displayTasks.appendChild(task_parent);
+  // displayTasks.appendChild(task_parent);
+  task_grand_parent.appendChild(task_parent);
+
+  task_parent2 = div_class_id_content('div', 'task2', `task2_${task.id}`, '');
+
+  // task_category_text = div_class_id_content('div', 'task_category_text', `task_category_text_${task.id}`, 'Category');
+  // task_category_button = div_class_id_content('div', 'task_category_button', `task_category_button_${task.id}`, `${task.category}`);
+  // task_category = div_class_id_content('div', 'task_category', `task_category_${task.id}`, '');
+
+  // task_priority_text = div_class_id_content('div', 'task_priority_text', `task_priority_text_${task.id}`, 'Priority');
+  // task_priority_button = div_class_id_content('div', 'task_priority_button', `task_priority_button_${task.id}`, `${task.priority}`);
+  // task_priority = div_class_id_content('div', 'task_priority', `task_priority_${task.id}`, '');
+
+  // task_due_date_text = div_class_id_content('div', 'task_due_date_text', `task_due_date_text_${task.id}`, 'Due Date');
+  // task_due_date_button = div_class_id_content('div', 'task_due_date_button', `task_due_date_button_${task.id}`, `${task.due_date}`);
+  // task_due_date = div_class_id_content('div', 'task_due_date', `task_due_date_${task.id}`, '');
+
+  // task_due_time_text = div_class_id_content('div', 'task_due_time_text', `task_due_time_text_${task.id}`, 'Due Time');
+  // task_due_time_button = div_class_id_content('div', 'task_due_time_button', `task_due_time_button_${task.id}`, `${task.due_time}`);
+  // task_due_time = div_class_id_content('div', 'task_due_time', `task_due_time_${task.id}`, '');
+
+  // task_full_task = div_class_id_content('div', 'task_full_task', `task_full_task_${task.id}`, 'View Full Task');
+
+  task_category_text = div_class_id_content('div', 'task_text', `task_category_text_${task.id}`, 'Category');
+  task_category_button = div_class_id_content('div', 'task_text_button', `task_category_button_${task.id}`, `${task.category}`);
+  task_category = div_class_id_content('div', 'task_tot', `task_category_${task.id}`, '');
+
+  task_priority_text = div_class_id_content('div', 'task_text', `task_priority_text_${task.id}`, 'Priority');
+  task_priority_button = div_class_id_content('div', 'task_text_button', `task_priority_button_${task.id}`, `${task.priority}`);
+  task_priority = div_class_id_content('div', 'task_tot', `task_priority_${task.id}`, '');
+
+  task_due_date_text = div_class_id_content('div', 'task_text', `task_due_date_text_${task.id}`, 'Due Date');
+  task_due_date_button = div_class_id_content('div', 'task_text_button', `task_due_date_button_${task.id}`, `${task.due_date}`);
+  task_due_date = div_class_id_content('div', 'task_tot', `task_due_date_${task.id}`, '');
+
+  task_due_time_text = div_class_id_content('div', 'task_text', `task_due_time_text_${task.id}`, 'Due Time');
+  task_due_time_button = div_class_id_content('div', 'task_text_button', `task_due_time_button_${task.id}`, `${task.due_time}`);
+  task_due_time = div_class_id_content('div', 'task_tot', `task_due_time_${task.id}`, '');
+
+  task_subtasks_text = div_class_id_content('div', 'task_text', `task_subtasks_text_${task.id}`, 'Subtasks');
+  task_subtasks_button = div_class_id_content('div', 'task_text_button', `task_subtasks_button_${task.id}`, `${task.subtasks.length}`);
+  task_subtasks = div_class_id_content('div', 'task_tot', `task_subtasks_${task.id}`, '');
+
+  task_full_task = div_class_id_content('div', 'task_full_task', `task_full_task_${task.id}`, 'View & Edit Task');
+
+  task_category.appendChild(task_category_text);
+  task_category.appendChild(task_category_button);
+
+  task_priority.appendChild(task_priority_text);
+  task_priority.appendChild(task_priority_button);
+
+  task_due_date.appendChild(task_due_date_text);
+  task_due_date.appendChild(task_due_date_button);
+
+  task_due_time.appendChild(task_due_time_text);
+  task_due_time.appendChild(task_due_time_button);
+
+  task_subtasks.appendChild(task_subtasks_text);
+  task_subtasks.appendChild(task_subtasks_button);
+
+  task_parent2.appendChild(task_category);
+  task_parent2.appendChild(task_priority);
+  task_parent2.appendChild(task_due_date);
+  task_parent2.appendChild(task_due_time);
+  task_parent2.appendChild(task_subtasks);
+  task_parent2.appendChild(task_full_task);
+
+  // displayTasks.appendChild(task_parent2);
+  task_grand_parent.appendChild(task_parent2);
+
+  displayTasks.appendChild(task_grand_parent);
 
   alignTaskContent(task_parent, task_content);
 
@@ -353,7 +425,7 @@ function addTask(task_value, ix) {
         'priority': task_value[2],
         'due_date': task_value[3],
         'due_time': task_value[4],
-        'subtasks': subtasks,
+        'subtasks': tmp_subtasks,
         'tags': tmp_tags,
       });
   } else {
@@ -371,6 +443,24 @@ function addTask(task_value, ix) {
   index++;
   displayEle(tasks[tasks.length - 1]);
   taskEventListeners(tasks[tasks.length - 1]);
+
+  function deleteEleDOM(id, str) {
+    removeEle = document.getElementById(str + id);
+    removeEle.remove();
+  }
+
+  for (let i = 0; i < tmp_subtasks.length; i++) {
+    deleteEleDOM(tmp_subtasks[i].id, 'subtask_bar_');
+  }
+
+  for (let i = 0; i < tmp_tags.length; i++) {
+    deleteEleDOM(tmp_tags[i].id, 'tag_bar_');
+  }
+
+  tmp_subtasks = [];
+  tmp_subtasks_id = 1;
+  tmp_tags = [];
+  tmp_tags_id = 1;
 }
 
 let taskForm = document.getElementById("taskForm");

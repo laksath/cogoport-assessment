@@ -330,25 +330,71 @@ option {
     }
 }
 
-.task {
+.task_grandpa{
+    margin-bottom: 12px;
+}
+
+.task, .task2 {
     display: flex;
     width: 90%;
     height: 40px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 10px;
+}
+
+.task2{
+    justify-content: space-between;
+    height: 50px;
+    margin-top: 5px;
+}
+
+.task_tot{
+    width: 10%;
+}
+
+.task_text{
+    text-align: center;
+    height: 20px;
+}
+
+.task_text_button{
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(47, 47, 47, 0.5);
+    text-align: center;
+    height: 30px;
+}
+
+.task_full_task{
+    width: 15%;
+    height: 50px;
+    display: flex;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(47, 47, 47, 0.5);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 @media screen and (max-width: 768px) {
-    .task {
+    .task, .task2{
         width: 95%;
+    }
+
+    .task_text, .task_text_button, .task_full_task{
+        font-size: 8px;
     }
 }
 
 @media screen and (max-width: 321px) {
-    .task {
+    .task,  .task2{
         width: 95%;
         margin-left: 3.8px;
+    }
+
+    .task_text, .task_text_button, .task_full_task{
+        font-size: 8px;
     }
 }
 

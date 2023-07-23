@@ -102,6 +102,9 @@ input {
     font-weight: bold;
 }
 
+
+
+
 .input_portion select,
 input {
     height: 50px;
@@ -116,6 +119,19 @@ input {
     font-family: "PT sans", sans-serif;
 }
 
+@media screen and (max-width: 768px) {
+    .input_portion div {
+        font-size: 10px;
+    }
+
+    .input_portion select {
+        font-size: 10px;
+    }
+
+    .input_portion input {
+        font-size: 7px;
+    }
+}
 
 option {
     padding: 10px 5px;
@@ -152,6 +168,15 @@ option {
     text-align: center;
     font-weight: 100;
 }
+
+@media screen and (max-width: 768px) {
+
+    #tag_text::placeholder,
+    #tag_text_search::placeholder {
+        font-size: 10px;
+    }
+}
+
 
 .tag_container button {
     border-radius: 10px;
@@ -207,6 +232,13 @@ option {
     background-color: #a0a0a0;
 }
 
+@media screen and (max-width: 768px) {
+    .tag_display{
+        font-size: 10px;
+    }
+}
+
+
 .tag_bar {
     display: flex;
     border: 0.5px solid #908d8d;
@@ -238,7 +270,6 @@ option {
     border-left: 0.5px solid #908d8d;
     padding: 4px;
 }
-
 
 
 .save_submit {

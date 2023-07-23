@@ -194,7 +194,7 @@ let categories = ['Personal', 'Work', 'Home', 'Family', 'Health', 'Self-growth',
 let priority = ['Low', 'Medium', 'High'];
 var index = 1;
 let displayTasks = document.getElementById("displayTask")
-
+let tasks_copy;
 
 function updateProgress() {
 
@@ -618,12 +618,24 @@ search.addEventListener("click", (e) => {
     filtered_tasks = filtered_tasks.filter(item => item.category == fil_time.value);
   }
 
-  console.log(fil_cat.value, filtered_tasks);
-  for (i = 0; i < filtered_tasks.length; i++) {
-    addTask(filtered_tasks[i], 1);
+  for (i = 0; i < tasks.length; i++) {
+    displayEle(filtered_tasks);
   }
-
 });
+
+let reset_search = document.getElementById('reset_search');
+search.addEventListener("click", (e) => {
+  for (i = 0; i < tasks.length; i++) {
+    id = tasks[i].id;
+    removeEle = document.getElementById(`task_grandpa_${id}`);
+    try{
+      removeEle.remove();
+    }catch (error){
+      continue;
+    }
+  }
+});
+
 
 getapi("https://jsonplaceholder.typicode.com/todos");
 

@@ -61,13 +61,13 @@ h1 {
 }
 
 @media screen and (max-width: 768px) {
-    #enter_task {
+    .text_area {
         margin-right: 1px;
         font-size: 12px;
     }
 }
 
-#enter_task:focus {
+.text_area:focus {
     outline: none;
 }
 
@@ -129,7 +129,8 @@ option {
     justify-content: space-between;
 }
 
-#tag_text {
+#tag_text,
+#tag_text_search {
     padding: 0px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -137,6 +138,14 @@ option {
 }
 
 #tag_text::placeholder {
+    color: #acaaaa;
+    font-size: 20px;
+    font-family: "PT sans", sans-serif;
+    text-align: center;
+    font-weight: 100;
+}
+
+#tag_text_search::placeholder {
     color: #acaaaa;
     font-size: 20px;
     font-family: "PT sans", sans-serif;
@@ -218,7 +227,7 @@ option {
     padding: 4px;
 }
 
-.tag_bar_delete{
+.tag_bar_delete {
     color: rgba(247, 5, 5, 0.5);
     font-size: 20px;
     font-family: "PT sans", sans-serif;
@@ -258,7 +267,7 @@ option {
 }
 
 @media screen and (max-width: 768px) {
-    #enter_task {
+    .text_area {
         font-size: 15px;
     }
 
@@ -330,11 +339,12 @@ option {
     }
 }
 
-.task_grandpa{
+.task_grandpa {
     margin-bottom: 12px;
 }
 
-.task, .task2 {
+.task,
+.task2 {
     display: flex;
     width: 90%;
     height: 40px;
@@ -342,22 +352,22 @@ option {
     margin-right: auto;
 }
 
-.task2{
+.task2 {
     justify-content: space-between;
     height: 50px;
     margin-top: 5px;
 }
 
-.task_tot{
+.task_tot {
     width: 10%;
 }
 
-.task_text{
+.task_text {
     text-align: center;
     height: 20px;
 }
 
-.task_text_button{
+.task_text_button {
     border: none;
     border-radius: 5px;
     background-color: rgba(47, 47, 47, 0.5);
@@ -365,7 +375,7 @@ option {
     height: 30px;
 }
 
-.task_full_task{
+.task_full_task {
     width: 15%;
     height: 50px;
     display: flex;
@@ -375,25 +385,35 @@ option {
     justify-content: center;
     align-items: center;
     text-align: center;
+    cursor: pointer;
+    color: #fff;
 }
 
 @media screen and (max-width: 768px) {
-    .task, .task2{
+
+    .task,
+    .task2 {
         width: 95%;
     }
 
-    .task_text, .task_text_button, .task_full_task{
+    .task_text,
+    .task_text_button,
+    .task_full_task {
         font-size: 8px;
     }
 }
 
 @media screen and (max-width: 321px) {
-    .task,  .task2{
+
+    .task,
+    .task2 {
         width: 95%;
         margin-left: 3.8px;
     }
 
-    .task_text, .task_text_button, .task_full_task{
+    .task_text,
+    .task_text_button,
+    .task_full_task {
         font-size: 8px;
     }
 }
@@ -553,6 +573,57 @@ option {
     }
 }
 
+.task3 {
+    width: 90%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.task_display {
+    text-align: center;
+    width: 50%;
+    /* background-color: red; */
+    font-family: "PT sans", sans-serif;
+    font-weight: 900;
+    font-size: 17px;
+}
+
+@media screen and (max-width: 768px) {
+    .task_display {
+        font-size: 10px;
+    }
+}
+
+.task_display_button {
+    border: none;
+    font-family: "PT sans", sans-serif;
+    font-weight: 900;
+    font-size: 17px;
+    cursor: pointer;
+    width: 10%;
+    color: #fff;
+    background-color: rgba(47, 47, 47, 0.5);
+    margin-left: 10px;
+}
+
+.task_display_content {
+    height: 100px;
+    /* display: none; */
+    /* background-color: blue; */
+    overflow-y: auto;
+    font-family: "PT sans", sans-serif;
+    font-weight: 900;
+    font-size: 17px;
+}
+
+.task_display_item {
+    text-align: center;
+    font-family: "PT sans", sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+}
 
 .modal {
     display: none;

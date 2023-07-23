@@ -96,6 +96,8 @@ tag_text.addEventListener('keydown', function (event) {
 let tmp_subtasks = [];
 let tmp_subtasks_id = 1;
 
+
+
 //Modal Code
 const openModalBtn = document.getElementById('openModalBtn');
 const modal = document.getElementById('myModal');
@@ -198,11 +200,10 @@ function updateProgress() {
 
   let tmp_count = 0;
   for (i = 0; i < tasks.length; i++) if (tasks[i].completed == 1) tmp_count++;
-  // console.log(tmp_count);
-
   progress = tasks.length == 0 ? 0 : Math.round(tmp_count * 10000 / tasks.length) / 100;
 
   const progressBar = document.querySelector('.progress');
+  // progressBar.style.width = progress + '%';
   progressBar.style.width = progress + '%';
 
   const completed = document.querySelector('.completed');
@@ -212,10 +213,10 @@ function updateProgress() {
 
   for (let i = 0; i <= limit; i++) {
     setTimeout(function () {
-      completed.innerText = `Completed : ${i}% (${tmp_count}/${tasks.length})`;
+      completed.innerText = `Completed : ${i}%`;
     }, SPEED * i);
   }
-  setTimeout(function () { completed.innerText = `Completed : ${progress}% (${tmp_count}/${tasks.length})`; }, SPEED * (limit + 1));
+  setTimeout(function () { completed.innerText = `Completed : ${progress}%`; }, SPEED * (limit + 1));
 }
 
 function deleteEle(task_array, id, str) {
@@ -223,12 +224,15 @@ function deleteEle(task_array, id, str) {
   for (let i = 0; i < task_array.length; i++) {
     if (task_array[i].id == id) {
       task_array.splice(i, 1);
+      break;
     }
   }
 
   console.log(id, task_array);
   removeEle = document.getElementById(str + id);
   removeEle.remove();
+
+  // updateProgress();
 }
 
 function alignTaskContent(task_main, task_content) {
@@ -285,12 +289,12 @@ function strikethroughV2(taskToUpdate, status) {
     task_content.style.color = '#009b00';
     taskToUpdate.completed = true;
   }
-  updateProgress();
+  // updateProgress();
 }
 
 function taskEventListeners(task) {
   task_delete_button.addEventListener("click", (e) => {
-    deleteEle(tasks, `${task.id}`, 'task_');
+    deleteEle(tasks, `${task.id}`, 'task_grandpa_');
   });
 
   task_edit_button.addEventListener("click", (e) => {
@@ -375,7 +379,11 @@ function displayEle(task) {
   task_subtasks_button = div_class_id_content('div', 'task_text_button', `task_subtasks_button_${task.id}`, `${task.subtasks.length}`);
   task_subtasks = div_class_id_content('div', 'task_tot', `task_subtasks_${task.id}`, '');
 
-  task_full_task = div_class_id_content('div', 'task_full_task', `task_full_task_${task.id}`, 'View & Edit Task');
+  task_tags_text = div_class_id_content('div', 'task_text', `task_tags_text_${task.id}`, 'Tags');
+  task_tags_button = div_class_id_content('div', 'task_text_button', `task_tags_button_${task.id}`, `${task.tags.length}`);
+  task_tags = div_class_id_content('div', 'task_tot', `task_tags_${task.id}`, '');
+
+  task_full_task = div_class_id_content('button', 'task_full_task', `task_full_task_${task.id}`, 'View & Edit Task');
 
   task_category.appendChild(task_category_text);
   task_category.appendChild(task_category_button);
@@ -392,15 +400,50 @@ function displayEle(task) {
   task_subtasks.appendChild(task_subtasks_text);
   task_subtasks.appendChild(task_subtasks_button);
 
+  task_tags.appendChild(task_tags_text);
+  task_tags.appendChild(task_tags_button);
+
   task_parent2.appendChild(task_category);
   task_parent2.appendChild(task_priority);
   task_parent2.appendChild(task_due_date);
   task_parent2.appendChild(task_due_time);
   task_parent2.appendChild(task_subtasks);
-  task_parent2.appendChild(task_full_task);
+  task_parent2.appendChild(task_tags);
 
-  // displayTasks.appendChild(task_parent2);
   task_grand_parent.appendChild(task_parent2);
+
+
+  task_parent3 = div_class_id_content('div', 'task3', `task3_${task.id}`, '');
+
+  task_subtask_display = div_class_id_content('div', 'task_display', `task_subtask_display_${task.id}`, 'SubTask Display');
+  task_subtask_display_collapse = div_class_id_content('button', 'task_display_button', `task_subtask_display_collapse_button_${task.id}`, `View`);
+  task_subtask_display_content = div_class_id_content('div', 'task_display_content', `task_subtask_display_content_${task.id}`, '');
+  for (let i = 0; i < task.subtasks.length; i++) {
+    task_subtask_display_item =
+      div_class_id_content('div', 'task_display_item', `task_subtask_display_item_${task.subtasks[i].id}`, `${task.subtasks[i].content}`);
+    task_subtask_display_content.appendChild(task_subtask_display_item);
+  }
+
+  task_tag_display = div_class_id_content('div', 'task_display', `task_tag_display_${task.id}`, 'Tag Display');
+  task_tag_display_collapse = div_class_id_content('button', 'task_display_button', `task_tag_display_collapse_${task.id}`, `View`);
+  task_tag_display_content = div_class_id_content('div', 'task_display_content', `task_tag_display_content_${task.id}`, '');
+  for (let i = 0; i < task.tags.length; i++) {
+    task_tag_display_item =
+      div_class_id_content('div', 'task_display_item', ``, `${task.tags[i].content}`);
+    task_tag_display_content.appendChild(task_tag_display_item);
+  }
+
+  task_subtask_display.appendChild(task_subtask_display_collapse);
+  task_subtask_display.appendChild(task_subtask_display_content);
+
+  task_tag_display.appendChild(task_tag_display_collapse);
+  task_tag_display.appendChild(task_tag_display_content);
+
+  task_parent3.appendChild(task_subtask_display);
+  task_parent3.appendChild(task_tag_display);
+
+  task_grand_parent.appendChild(task_parent3);
+
 
   displayTasks.appendChild(task_grand_parent);
 
@@ -429,8 +472,8 @@ function addTask(task_value, ix) {
         'tags': tmp_tags,
       });
   } else {
-    task_value['category'] = 'Medium';
-    task_value['priority'] = 'Other';
+    task_value['category'] = 'Other';
+    task_value['priority'] = 'Medium';
 
     const currentDate = new Date();
     task_value['due_date'] = currentDate.toISOString().split('T')[0];
@@ -438,7 +481,6 @@ function addTask(task_value, ix) {
     task_value['subtasks'] = [];
     task_value['tags'] = [];
     tasks.push(task_value);
-    index;
   }
   index++;
   displayEle(tasks[tasks.length - 1]);
@@ -521,7 +563,76 @@ async function getapi(url) {
   }
 }
 
+function addTask2(task_value) {
+  tasks.push(task_value);
+  index++;
+  displayEle(tasks[tasks.length - 1]);
+  taskEventListeners(tasks[tasks.length - 1]);
+
+  function deleteEleDOM(id, str) {
+    removeEle = document.getElementById(str + id);
+    removeEle.remove();
+  }
+
+  for (let i = 0; i < tmp_subtasks.length; i++) {
+    deleteEleDOM(tmp_subtasks[i].id, 'subtask_bar_');
+  }
+
+  for (let i = 0; i < tmp_tags.length; i++) {
+    deleteEleDOM(tmp_tags[i].id, 'tag_bar_');
+  }
+
+  tmp_subtasks = [];
+  tmp_subtasks_id = 1;
+  tmp_tags = [];
+  tmp_tags_id = 1;
+}
+
+let search = document.getElementById('search');
+search.addEventListener("click", (e) => {
+  fil_cat = document.getElementById("category_search");
+  fil_pri = document.getElementById("priority_search");
+  fil_date = document.getElementById("datePickerSearch");
+  fil_time = document.getElementById("timePickerSearch");
+
+  filtered_tasks = tasks.slice();
+  tasks_copy = tasks.slice();
+
+  for (i = 0; i < tasks.length; i++) {
+    id = tasks[i].id;
+    try {
+      removeEle = document.getElementById(`task_grandpa_${id}`);
+      removeEle.remove();
+    } catch {
+      ;
+    }
+
+  }
+
+  if (fil_cat.value != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.category == fil_cat.value);
+  }
+
+  console.log(fil_cat.value, filtered_tasks);
+  for (i = 0; i < filtered_tasks.length; i++) {
+    addTask(filtered_tasks[i], 1);
+  }
+
+});
+
 getapi("https://jsonplaceholder.typicode.com/todos");
+
+// let info_array = [
+//   'enter_task.value',
+//   'enter_category.value',
+//   'enter_priority.value',
+//   'enter_datePicker.value',
+//   'enter_timePicker.value',
+// ]
+
+// tmp_subtasks = [{ 'id': 0, 'content': 'sfw' }, { 'id': 1, 'content': 'sfw' }, { 'id': 2, 'content': 'sfw' }, { 'id': 3, 'content': 'sfw' }, { 'id': 0, 'content': 'sfw' },];
+// tmp_tags = [{ 'id': 0, 'content': 'sfw' }, { 'id': 1, 'content': 'sfw' }, { 'id': 2, 'content': 'sfw' }, { 'id': 3, 'content': 'sfw' }];
+// addTask(info_array, -1);
 // const storedArrayJson = localStorage.getItem('task_data');
 // const storedArray = JSON.parse(storedArrayJson);
 
@@ -537,5 +648,3 @@ getapi("https://jsonplaceholder.typicode.com/todos");
 //     taskEventListeners(tasks[i]);
 //   }
 // }
-
-updateProgress();

@@ -97,12 +97,13 @@
         </div>
     </div>
 
-    <div class="progress-bar">
+    <!-- <div class="progress-bar">
         <div class="progress"></div>
     </div>
-    <div class="completed"></div>
+    <div class="completed"></div> -->
+    <div style="margin-bottom: 50px;"></div>
 
-    <!-- 
+
     <form id="taskForm">
         <textarea type="text" class="text_area" id="enter_task"
             placeholder="Enter the task/subtask to be searched"></textarea>
@@ -110,8 +111,8 @@
         <div class="form_data">
             <div class="form_line_1">
                 <div class="input_portion">
-                    <div for="category">Filter Category</div>
-                    <select id="category">
+                    <div for="category_search">Filter Category</div>
+                    <select id="category_search">
                         <option value="Personal">Personal</option>
                         <option value="Work">Work</option>
                         <option value="Home">Home</option>
@@ -121,55 +122,60 @@
                         <option value="Finance">Finance</option>
                         <option value="Travel">Travel</option>
                         <option value="Social">Social</option>
-                        <option value="Other" selected>Other</option>
+                        <option value="Other">Other</option>
+                        <option value="" selected>N/A</option>
                     </select>
                 </div>
 
                 <div class="input_portion">
-                    <div for="priority">Filter Priority</div>
-                    <select id="priority">
+                    <div for="priority_search">Filter Priority</div>
+                    <select id="priority_search">
                         <option value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
+                        <option value="" selected>N/A</option>
                     </select>
                 </div>
 
                 <div class="input_portion">
                     <div for="datePicker">Filter Date</div>
-                    <input type="date" id="datePicker">
+                    <input type="date" id="datePickerSearch">
                 </div>
 
                 <div class="input_portion">
                     <div for="timePicker">Filter Time</div>
-                    <input type="time" id="timePicker">
+                    <input type="time" id="timePickerSearch">
                 </div>
             </div>
         </div>
 
-        <div class="tag_container">
+        <!-- <div class="tag_container">
             <div class="input_portion">
                 <div style="display: flex;">
-                    <input type="text" id="tag_text" placeholder="Search Tags">
-                    <button id="tag_button">✔</button>
+                    <input type="text" id="tag_text_search" placeholder="Search Tags">
+                    <button id="tag_button_search">✔</button>
                 </div>
             </div>
             <div class="tag_display">The searched tags will appear here</div>
+        </div> -->
+
+        <div class="save_submit">
+            <button id="backlog" class='task_submit' type="button">Backlog</button>
+            <button id="search" class='task_submit' type="button">Search</button>
         </div>
 
         <div class="save_submit">
-            <button id="save_data" class='task_submit' type="button">Backlog</button>
-            <input type="submit" class='task_submit' value="Search">
+            <button id="priority_sort" class='task_submit' type="button">Priority</button>
+            <button id="dateTime_sort" class='task_submit' type="button">DateTime</button>
+            <button id="category_sort" class='task_submit' type="button">Category </button>
+            <button id="sort" class='task_submit' type="button">Sort</button>
         </div>
 
         <div class="save_submit">
-            <button id="save_data" class='task_submit' type="button">Priority</button>
-            <button id="save_data" class='task_submit' type="button">DateTime</button>
-            <button id="save_data" class='task_submit' type="button">Category </button>
-            <button id="activity_logs" class='task_submit' type="button">Sort</button>
+            <button id="reset_sort" class='task_submit' type="button">Reset Sort</button>
+            <button id="reset_search" class='task_submit' type="button">Reset Search</button>
         </div>
-
-
-    </form> -->
+    </form>
 
     <!-- Display Task -->
     <div id="displayTask">

@@ -590,6 +590,7 @@ function addTask2(task_value) {
 
 let search = document.getElementById('search');
 search.addEventListener("click", (e) => {
+  task_search = document.getElementById("enter_task_search");
   fil_cat = document.getElementById("category_search");
   fil_pri = document.getElementById("priority_search");
   fil_date = document.getElementById("datePickerSearch");
@@ -600,17 +601,21 @@ search.addEventListener("click", (e) => {
 
   for (i = 0; i < tasks.length; i++) {
     id = tasks[i].id;
-    try {
-      removeEle = document.getElementById(`task_grandpa_${id}`);
-      removeEle.remove();
-    } catch {
-      ;
-    }
-
+    removeEle = document.getElementById(`task_grandpa_${id}`);
+    removeEle.remove();
   }
 
   if (fil_cat.value != '') {
     filtered_tasks = filtered_tasks.filter(item => item.category == fil_cat.value);
+  }
+  if (fil_pri.value != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.category == fil_pri.value);
+  }
+  if (fil_date.value != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.category == fil_date.value);
+  }
+  if (fil_time.value != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.category == fil_time.value);
   }
 
   console.log(fil_cat.value, filtered_tasks);
@@ -633,18 +638,18 @@ getapi("https://jsonplaceholder.typicode.com/todos");
 // tmp_subtasks = [{ 'id': 0, 'content': 'sfw' }, { 'id': 1, 'content': 'sfw' }, { 'id': 2, 'content': 'sfw' }, { 'id': 3, 'content': 'sfw' }, { 'id': 0, 'content': 'sfw' },];
 // tmp_tags = [{ 'id': 0, 'content': 'sfw' }, { 'id': 1, 'content': 'sfw' }, { 'id': 2, 'content': 'sfw' }, { 'id': 3, 'content': 'sfw' }];
 // addTask(info_array, -1);
-// const storedArrayJson = localStorage.getItem('task_data');
-// const storedArray = JSON.parse(storedArrayJson);
+const storedArrayJson = localStorage.getItem('task_data');
+const storedArray = JSON.parse(storedArrayJson);
 
-// if (storedArray == null) {
-//   getapi("https://jsonplaceholder.typicode.com/todos");
-// } else {
-//   const storedIntegerString = localStorage.getItem('index');
-//   index = parseInt(storedIntegerString);
-//   tasks = storedArray;
-//   // console.log(tasks);
-//   for (let i = 0; i < tasks.length; i++) {
-//     displayEle(tasks[i]);
-//     taskEventListeners(tasks[i]);
-//   }
-// }
+if (storedArray == null) {
+  getapi("https://jsonplaceholder.typicode.com/todos");
+} else {
+  const storedIntegerString = localStorage.getItem('index');
+  index = parseInt(storedIntegerString);
+  tasks = storedArray;
+  // console.log(tasks);
+  for (let i = 0; i < tasks.length; i++) {
+    displayEle(tasks[i]);
+    taskEventListeners(tasks[i]);
+  }
+}

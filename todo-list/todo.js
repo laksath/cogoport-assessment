@@ -618,8 +618,9 @@ search.addEventListener("click", (e) => {
     filtered_tasks = filtered_tasks.filter(item => item.category == fil_time.value);
   }
 
-  for (i = 0; i < tasks.length; i++) {
-    displayEle(filtered_tasks);
+  console.log(filtered_tasks[0]);
+  for (i = 0; i < filtered_tasks.length; i++) {
+    displayEle(filtered_tasks[i]);
   }
 });
 

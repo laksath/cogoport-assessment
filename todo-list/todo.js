@@ -69,6 +69,64 @@ function deleteEleDOM(id, str) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function parseTodoText(todoText) {
+  // Regular expression to find dates in formats like "tomorrow", "tmo", "30th Nov", etc.
+  const dateRegex = /(\b(?:tomorrow|tmo)\b|\b\d{1,2}(?:st|nd|rd|th)? (?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b)/i;
+
+  // Regular expression to find time in formats like "3 pm"
+  const timeRegex = /(\b\d{1,2}(:\d{1,2})? (?:am|pm)\b)/i;
+
+  // Extract date and time from todoText using the regular expressions
+  const dateMatch = todoText.match(dateRegex);
+  const timeMatch = todoText.match(timeRegex);
+
+  let dueDate = null;
+
+  if (dateMatch) {
+    const currentDate = new Date();
+    const dateStr = dateMatch[0].toLowerCase().trim();
+
+    if (dateStr === 'tomorrow' || dateStr === 'tmo') {
+      currentDate.setDate(currentDate.getDate() + 1);
+      dueDate = currentDate;
+    } else {
+      const dayMonth = dateMatch[0].split(' ');
+      const day = parseInt(dayMonth[0]);
+      const month = dayMonth[1];
+      const currentYear = currentDate.getFullYear();
+      const dateWithYear = `${day} ${month} ${currentYear}`;
+      // Convert the extracted date into a valid JavaScript Date object
+      dueDate = new Date(dateWithYear);
+
+      // Check if the due date has already passed for the current year
+      if (dueDate < currentDate) {
+        dueDate.setFullYear(currentYear + 1); // Increment the year to the next year
+      }
+    }
+  }
+
+  if (timeMatch && dueDate) {
+    // Extract the time from the timeMatch and update the dueDate
+    const timeParts = timeMatch[0].split(' ');
+    const time = timeParts[0];
+    const amPm = timeParts[1];
+
+    const hours = parseInt(time.split(':')[0]);
+    let minutes = 0;
+    if (time.split(':').length > 1) {
+      minutes = parseInt(time.split(':')[1]);
+    }
+
+    if (amPm.toLowerCase() === 'pm') {
+      hours += 12;
+    }
+
+    dueDate.setHours(hours, minutes);
+  }
+
+  return dueDate;
+}
+
 // Code for text area
 const textarea = document.getElementById('enter_task');
 function resizeTextarea() {
@@ -551,6 +609,25 @@ function taskEventListeners(task) {
 }
 
 function addTask(task_value) {
+  date_time_status = parseTodoText(enter_task.value);
+  if (date_time_status != null) {
+    const dateObject = new Date(date_time_status);
+
+    // Extracting date components
+    const year = dateObject.getFullYear();
+    const month = dateObject.getMonth() + 1;
+    const day = dateObject.getDate();
+    const date = `${year}-${month}-${day}`;
+
+    // Extracting time components
+    const hours = dateObject.getHours();
+    const minutes = dateObject.getMinutes();
+    const time = `${hours}:${minutes}`;
+
+    task_value[3] = date;
+    task_value[4] = time;
+  }
+
   tasks.push(
     {
       'id': index,
@@ -577,7 +654,6 @@ function addTask(task_value) {
   for (let i = 0; i < tasks.length; i++) {
     createNewCard(tasks[i], displayTask);
   }
-
 
   for (let i = 0; i < tmp_subtasks.length; i++) {
     try {

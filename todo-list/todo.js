@@ -1,3 +1,58 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+add_task_container = document.getElementById('taskForm');
+search_task_container = document.getElementById('taskFormSearch');
+sort_task_container = document.getElementById('taskFormSort');
+displayTask = document.getElementById('displayTask');
+displaySearchSortTask = document.getElementById('displaySearchSortTask');
+
+const add_task_checkbox = document.getElementById('add_task_toggle');
+add_task_checkbox.addEventListener('change', function () {
+  if (add_task_checkbox.checked) {
+    console.log('Checkbox is checked.');
+    add_task_container.style.display = 'block';
+  } else {
+    add_task_container.style.display = 'none';
+    console.log('Checkbox is unchecked.');
+  }
+});
+
+const search_task_checkbox = document.getElementById('search_task_toggle');
+search_task_checkbox.addEventListener('change', function () {
+  if (search_task_checkbox.checked) {
+    console.log('Checkbox is checked.');
+    search_task_container.style.display = 'block';
+  } else {
+    console.log('Checkbox is unchecked.');
+    search_task_container.style.display = 'none';
+  }
+});
+
+const sort_task_checkbox = document.getElementById('sort_task_toggle');
+sort_task_checkbox.addEventListener('change', function () {
+  if (sort_task_checkbox.checked) {
+    console.log('Checkbox is checked.');
+    sort_task_container.style.display = 'block';
+  } else {
+    console.log('Checkbox is unchecked.');
+    sort_task_container.style.display = 'none';
+  }
+});
+
+const display_task_checkbox = document.getElementById('display_task_toggle');
+display_task_checkbox.addEventListener('change', function () {
+  if (display_task_checkbox.checked) {
+    console.log('Checkbox is checked.');
+    displayTask.style.display = 'flex';
+    displaySearchSortTask.style.display = 'flex';
+  } else {
+    console.log('Checkbox is unchecked.');
+    displayTask.style.display = 'none';
+    displaySearchSortTask.style.display = 'none';
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //general code to create new elements
 function div_class_id_content(div_, class_, id_, content_) {
   element = document.createElement(div_);
@@ -5,6 +60,11 @@ function div_class_id_content(div_, class_, id_, content_) {
   element.id = id_;
   element.innerText = content_;
   return element;
+}
+
+function deleteEleDOM(id, str) {
+  removeEle = document.getElementById(str + id);
+  removeEle.remove();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,9 +156,7 @@ tag_text.addEventListener('keydown', function (event) {
 let tmp_subtasks = [];
 let tmp_subtasks_id = 1;
 
-
-
-//Modal Code
+//Modal Code for subtasks
 const openModalBtn = document.getElementById('openModalBtn');
 const modal = document.getElementById('myModal');
 const closeModalBtn = modal.querySelector('.close');
@@ -162,6 +220,7 @@ function editSubEle(tmp_subtasks, id) {
   }
   subtask_content_.contentEditable = !subtask_content_.isContentEditable;
 }
+
 submit_subtask.addEventListener('click', function () {
   const subtask_string = text_area_subtasks.value;
   if (subtask_string != '') {
@@ -184,40 +243,221 @@ submit_subtask.addEventListener('click', function () {
   }
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// let tmp_subtasks = [];
+// let tmp_subtasks_id = 1;
+
+// //Modal Code for subtasks
+// const openModalBtn = document.getElementById('openModalBtn');
+// const modal = document.getElementById('myModal');
+const editmodal = document.getElementById('editmodal');
+// const closeModalBtn = modal.querySelector('.close');
+const closeEditModalBtn = editmodal.querySelector('.close');
+// const doneBtn = modal.querySelector('.submit_subtasks');
+const doneEditBtn = editmodal.querySelector('.submit_subtasks');
+
+// function openModal() {
+//   modal.style.display = 'block';
+// }
+
+// function closeModal() {
+//   modal.style.display = 'none';
+// }
+
+function closeEditModal() {
+  editmodal.style.display = 'none';
+}
+
+// openModalBtn.addEventListener('click', openModal);
+// closeModalBtn.addEventListener('click', closeModal);
+closeEditModalBtn.addEventListener('click', closeEditModal);
+// window.addEventListener('click', (event) => {
+//   if (event.target === modal) {
+//     closeModal();
+//   }
+// });
+window.addEventListener('click', (event) => {
+  if (event.target === modal) {
+    closeEditModalBtn();
+  }
+});
+
+// doneBtn.addEventListener('click', function () { closeModal(); });
+doneEditBtn.addEventListener('click', function () { closeEditModal(); });
+
+// text_area_subtasks = document.getElementById('text_area_subtasks');
+// submit_subtask = document.getElementById('submit_subtask');
+// subtasks = document.getElementsByClassName('subtasks')[0];
+
+// function create_subtask_bars(subtask_content, subtask_id) {
+//   const subtask_bar = div_class_id_content('div', 'subtask_bar', `subtask_bar_${subtask_id}`, '');
+//   const subtask_bar_content = div_class_id_content('div', 'subtask_bar_content', `subtask_content_${subtask_id}`, subtask_content);
+//   const subtask_bar_edit = div_class_id_content('button', 'subtask_bar_edit', `subtask_edit_${subtask_id}`, 'Edit');
+//   const subtask_bar_delete = div_class_id_content('button', 'subtask_bar_delete', `subtask_delete_${subtask_id}`, 'Remove');
+
+//   subtask_bar.appendChild(subtask_bar_content);
+//   subtask_bar.appendChild(subtask_bar_edit);
+//   subtask_bar.appendChild(subtask_bar_delete);
+//   subtasks.appendChild(subtask_bar);
+// }
+
+// function editSubEle(tmp_subtasks, id) {
+//   subtask_content_ = document.getElementById(`subtask_content_${id}`);
+//   subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
+
+//   if (subtask_bar_edit.innerText == 'Edit') {
+//     subtask_bar_edit.innerText = 'Save';
+//     subtask_content_.style.background = 'rgba(47, 47, 47, 0.5)'
+//     subtask_content_.style.marginRight = '2px';
+//     subtask_content_.style.border = '2px solid white';
+//     subtask_content_.style.borderRadius = '5px';
+//   } else {
+//     subtask_bar_edit.innerText = 'Edit';
+//     subtask_content_.style.background = 'none';
+//     subtask_content_.style.marginRight = '0';
+//     subtask_content_.style.border = 'none';
+//     subtask_content_.style.borderRadius = 'none';
+
+//     for (let i = 0; i < tmp_subtasks.length; i++) {
+//       if (tmp_subtasks[i].id == id) {
+//         tmp_subtasks[i].content = subtask_content_.innerText;
+//       }
+//     }
+//   }
+//   subtask_content_.contentEditable = !subtask_content_.isContentEditable;
+// }
+
+// submit_subtask.addEventListener('click', function () {
+//   const subtask_string = text_area_subtasks.value;
+//   if (subtask_string != '') {
+//     const id = tmp_subtasks_id;
+//     tmp_subtasks.push({ 'id': id, 'content': subtask_string });
+//     create_subtask_bars(subtask_string, id);
+//     text_area_subtasks.value = '';
+
+//     subtask_bar_delete = document.getElementById(`subtask_delete_${id}`);
+//     subtask_bar_delete.addEventListener('click', function (event) {
+//       deleteEle(tmp_subtasks, id, 'subtask_bar_');
+//     });
+
+//     subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
+//     subtask_bar_edit.addEventListener('click', function (event) {
+//       editSubEle(tmp_subtasks, id);
+//     });
+
+//     tmp_subtasks_id++;
+//   }
+// });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
+////////////////////////////////////////////////////////////////
+
+function createNewCard(task_, display_) {
+  const cardContainer = display_;
+
+  // Create the new card elements
+  const newCard = document.createElement('div');
+  newCard.id = `card_${task_.id}`;
+  newCard.classList.add('card');
+  newCard.setAttribute('draggable', true);
+
+  const titleElement = document.createElement('h2');
+  titleElement.textContent = task_.title;
+  titleElement.classList.add('title');
+
+  const infoElement = document.createElement('div');
+  infoElement.classList.add('info');
+
+  const tagContents = task_.tags.map(tag => tag.content);
+  let commaSeparatedTags = tagContents.join('</strong>, <strong>');
+  commaSeparatedTags = commaSeparatedTags == '' ? 'None' : `<strong>${commaSeparatedTags}</strong>`;
+
+
+  subtasks_element = `<ul class="subtask-list">`;
+  for (let i = 0; i < task_.subtasks.length; i++) {
+    subtasks_element += `<li>${task_.subtasks[i].content}</li>`;
+  }
+  subtasks_element += `</ul>`;
+  completed_status = task_.completed ? 'Yes' : 'No';
+  infoElement.innerHTML = `
+      <p><strong>Completed:</strong> ${completed_status}</p>
+      <p><strong>Category:</strong> ${task_.category}</p>
+      <p><strong>Priority:</strong> ${task_.priority}</p>
+      <p><strong>Due Date:</strong> ${task_.due_date}</p>
+      <p><strong>Due Time:</strong> ${task_.due_time}</p>
+      <p><strong>Subtasks:</strong> ${task_.subtasks.length}</p>
+      ${subtasks_element}
+      <p class="card_tag"><strong>Tags:</strong> ${commaSeparatedTags}</p>
+      <div class="buttons">
+          <button id="card_edit_${task_.id}" class="edit-button">Edit</button>
+          <button id="card_delete_${task_.id}" class="delete-button">Delete</button>
+      </div>
+  `;
+
+  newCard.addEventListener('dragstart', dragStart);
+  newCard.addEventListener('dragover', dragOver);
+  newCard.addEventListener('drop', drop);
+
+  newCard.appendChild(titleElement);
+  newCard.appendChild(infoElement);
+  cardContainer.appendChild(newCard);
+
+  card_edit_button = document.getElementById(`card_edit_${task_.id}`);
+  card_edit_button.addEventListener("click", (e) => {
+    editmodal.style.display = 'block';
+  });
+
+  card_delete_button = document.getElementById(`card_delete_${task_.id}`);
+  card_delete_button.addEventListener("click", (e) => {
+    deleteEleDOM(task_.id, "card_");
+    tasks = tasks.filter(task => task.id !== task_.id);
+    filtered_tasks = filtered_tasks.filter(task => task.id !== task_.id);
+  });
+
+}
+
+let draggedCard = null;
+
+function dragStart(event) {
+  draggedCard = this;
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('text/html', this.innerHTML);
+  this.classList.add('dragging');
+}
+
+function dragOver(event) {
+  event.preventDefault();
+  this.classList.add('dragover');
+}
+
+function drop(event) {
+  event.preventDefault();
+  if (draggedCard !== this) {
+    const parent = this.parentNode;
+    const placeholder = document.createElement('div');
+
+    parent.insertBefore(placeholder, draggedCard);
+    parent.insertBefore(draggedCard, this);
+    parent.replaceChild(this, placeholder);
+  }
+
+  this.classList.remove('dragover');
+  draggedCard.classList.remove('dragging');
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 let tasks = [];
 let categories = ['Personal', 'Work', 'Home', 'Family', 'Health', 'Self-growth', 'Finance', 'Travel ', 'Social ', 'Other'];
 let priority = ['Low', 'Medium', 'High'];
 var index = 1;
-let displayTasks = document.getElementById("displayTask")
 let tasks_copy;
-
-function updateProgress() {
-
-  let tmp_count = 0;
-  for (i = 0; i < tasks.length; i++) if (tasks[i].completed == 1) tmp_count++;
-  progress = tasks.length == 0 ? 0 : Math.round(tmp_count * 10000 / tasks.length) / 100;
-
-  const progressBar = document.querySelector('.progress');
-  // progressBar.style.width = progress + '%';
-  progressBar.style.width = progress + '%';
-
-  const completed = document.querySelector('.completed');
-
-  let SPEED = 40;
-  let limit = Math.floor(progress);
-
-  for (let i = 0; i <= limit; i++) {
-    setTimeout(function () {
-      completed.innerText = `Completed : ${i}%`;
-    }, SPEED * i);
-  }
-  setTimeout(function () { completed.innerText = `Completed : ${progress}%`; }, SPEED * (limit + 1));
-}
 
 function deleteEle(task_array, id, str) {
 
@@ -235,20 +475,20 @@ function deleteEle(task_array, id, str) {
   // updateProgress();
 }
 
-function alignTaskContent(task_main, task_content) {
-  var l = task_content.innerText.split('\n').length;
+// function alignTaskContent(task_main, task_content) {
+//   var l = task_content.innerText.split('\n').length;
 
-  if (l < 2) {
-    task_main.style.height = "40px";
-    task_content.style.overflow = "none";
-  }
-  else if (l > 1 && l < 5) {
-    task_main.style.height = "fit-content";
-  } else {
-    task_main.style.height = "100px";
-    task_content.style.overflow = "auto";
-  }
-}
+//   if (l < 2) {
+//     task_main.style.height = "40px";
+//     task_content.style.overflow = "none";
+//   }
+//   else if (l > 1 && l < 5) {
+//     task_main.style.height = "fit-content";
+//   } else {
+//     task_main.style.height = "100px";
+//     task_content.style.overflow = "auto";
+//   }
+// }
 
 function editEle(id, task) {
   task_parent = document.getElementById(`task_${id}`);
@@ -310,193 +550,45 @@ function taskEventListeners(task) {
   });
 }
 
-function displayEle(task) {
+function addTask(task_value) {
+  tasks.push(
+    {
+      'id': index,
+      'title': task_value[0],
+      'completed': false,
+      'category': task_value[1],
+      'priority': task_value[2],
+      'due_date': task_value[3],
+      'due_time': task_value[4],
+      'subtasks': tmp_subtasks,
+      'tags': tmp_tags,
+    }
+  );
 
-  task_grand_parent = div_class_id_content('div', 'task_grandpa', `task_grandpa_${task.id}`, '');
-
-  task_parent = div_class_id_content('div', 'task', `task_${task.id}`, '');
-
-  task_field = div_class_id_content('div', 'task_field', `task_field_${task.id}`, '');
-  task_content = div_class_id_content('div', 'task_content', `content_${task.id}`, task.title);
-  task_edit_button = div_class_id_content('button', 'task_edit_button', `edit_${task.id}`, 'Edit');
-  task_delete_button = div_class_id_content('button', 'task_delete_button', `delete_${task.id}`, 'Delete');
-
-  task_status = div_class_id_content('div', 'task_status', `task_status_${task.id}`, '');
-  task_status_content = div_class_id_content('div', 'task_status_content', `task_status_content_${task.id}`, 'Status');
-  task_status_tick = div_class_id_content('button', 'task_status_tick', `tick_${task.id}`, '✔');
-  task_status_cross = div_class_id_content('button', 'task_status_cross', `cross_${task.id}`, '🗙');
-
-  task_field.appendChild(task_content);
-  task_field.appendChild(task_edit_button);
-  task_field.appendChild(task_delete_button);
-  task_parent.appendChild(task_field);
-
-  task_status.appendChild(task_status_content);
-  task_status.appendChild(task_status_tick);
-  task_status.appendChild(task_status_cross);
-  task_parent.appendChild(task_status);
-
-  // displayTasks.appendChild(task_parent);
-  task_grand_parent.appendChild(task_parent);
-
-  task_parent2 = div_class_id_content('div', 'task2', `task2_${task.id}`, '');
-
-  // task_category_text = div_class_id_content('div', 'task_category_text', `task_category_text_${task.id}`, 'Category');
-  // task_category_button = div_class_id_content('div', 'task_category_button', `task_category_button_${task.id}`, `${task.category}`);
-  // task_category = div_class_id_content('div', 'task_category', `task_category_${task.id}`, '');
-
-  // task_priority_text = div_class_id_content('div', 'task_priority_text', `task_priority_text_${task.id}`, 'Priority');
-  // task_priority_button = div_class_id_content('div', 'task_priority_button', `task_priority_button_${task.id}`, `${task.priority}`);
-  // task_priority = div_class_id_content('div', 'task_priority', `task_priority_${task.id}`, '');
-
-  // task_due_date_text = div_class_id_content('div', 'task_due_date_text', `task_due_date_text_${task.id}`, 'Due Date');
-  // task_due_date_button = div_class_id_content('div', 'task_due_date_button', `task_due_date_button_${task.id}`, `${task.due_date}`);
-  // task_due_date = div_class_id_content('div', 'task_due_date', `task_due_date_${task.id}`, '');
-
-  // task_due_time_text = div_class_id_content('div', 'task_due_time_text', `task_due_time_text_${task.id}`, 'Due Time');
-  // task_due_time_button = div_class_id_content('div', 'task_due_time_button', `task_due_time_button_${task.id}`, `${task.due_time}`);
-  // task_due_time = div_class_id_content('div', 'task_due_time', `task_due_time_${task.id}`, '');
-
-  // task_full_task = div_class_id_content('div', 'task_full_task', `task_full_task_${task.id}`, 'View Full Task');
-
-  task_category_text = div_class_id_content('div', 'task_text', `task_category_text_${task.id}`, 'Category');
-  task_category_button = div_class_id_content('div', 'task_text_button', `task_category_button_${task.id}`, `${task.category}`);
-  task_category = div_class_id_content('div', 'task_tot', `task_category_${task.id}`, '');
-
-  task_priority_text = div_class_id_content('div', 'task_text', `task_priority_text_${task.id}`, 'Priority');
-  task_priority_button = div_class_id_content('div', 'task_text_button', `task_priority_button_${task.id}`, `${task.priority}`);
-  task_priority = div_class_id_content('div', 'task_tot', `task_priority_${task.id}`, '');
-
-  task_due_date_text = div_class_id_content('div', 'task_text', `task_due_date_text_${task.id}`, 'Due Date');
-  task_due_date_button = div_class_id_content('div', 'task_text_button', `task_due_date_button_${task.id}`, `${task.due_date}`);
-  task_due_date = div_class_id_content('div', 'task_tot', `task_due_date_${task.id}`, '');
-
-  task_due_time_text = div_class_id_content('div', 'task_text', `task_due_time_text_${task.id}`, 'Due Time');
-  task_due_time_button = div_class_id_content('div', 'task_text_button', `task_due_time_button_${task.id}`, `${task.due_time}`);
-  task_due_time = div_class_id_content('div', 'task_tot', `task_due_time_${task.id}`, '');
-
-  task_subtasks_text = div_class_id_content('div', 'task_text', `task_subtasks_text_${task.id}`, 'Subtasks');
-  task_subtasks_button = div_class_id_content('div', 'task_text_button', `task_subtasks_button_${task.id}`, `${task.subtasks.length}`);
-  task_subtasks = div_class_id_content('div', 'task_tot', `task_subtasks_${task.id}`, '');
-
-  task_tags_text = div_class_id_content('div', 'task_text', `task_tags_text_${task.id}`, 'Tags');
-  task_tags_button = div_class_id_content('div', 'task_text_button', `task_tags_button_${task.id}`, `${task.tags.length}`);
-  task_tags = div_class_id_content('div', 'task_tot', `task_tags_${task.id}`, '');
-
-  task_full_task = div_class_id_content('button', 'task_full_task', `task_full_task_${task.id}`, 'View & Edit Task');
-
-  task_category.appendChild(task_category_text);
-  task_category.appendChild(task_category_button);
-
-  task_priority.appendChild(task_priority_text);
-  task_priority.appendChild(task_priority_button);
-
-  task_due_date.appendChild(task_due_date_text);
-  task_due_date.appendChild(task_due_date_button);
-
-  task_due_time.appendChild(task_due_time_text);
-  task_due_time.appendChild(task_due_time_button);
-
-  task_subtasks.appendChild(task_subtasks_text);
-  task_subtasks.appendChild(task_subtasks_button);
-
-  task_tags.appendChild(task_tags_text);
-  task_tags.appendChild(task_tags_button);
-
-  task_parent2.appendChild(task_category);
-  task_parent2.appendChild(task_priority);
-  task_parent2.appendChild(task_due_date);
-  task_parent2.appendChild(task_due_time);
-  task_parent2.appendChild(task_subtasks);
-  task_parent2.appendChild(task_tags);
-
-  task_grand_parent.appendChild(task_parent2);
-
-
-  task_parent3 = div_class_id_content('div', 'task3', `task3_${task.id}`, '');
-
-  task_subtask_display = div_class_id_content('div', 'task_display', `task_subtask_display_${task.id}`, 'SubTask Display');
-  task_subtask_display_collapse = div_class_id_content('button', 'task_display_button', `task_subtask_display_collapse_button_${task.id}`, `View`);
-  task_subtask_display_content = div_class_id_content('div', 'task_display_content', `task_subtask_display_content_${task.id}`, '');
-  for (let i = 0; i < task.subtasks.length; i++) {
-    task_subtask_display_item =
-      div_class_id_content('div', 'task_display_item', `task_subtask_display_item_${task.subtasks[i].id}`, `${task.subtasks[i].content}`);
-    task_subtask_display_content.appendChild(task_subtask_display_item);
-  }
-
-  task_tag_display = div_class_id_content('div', 'task_display', `task_tag_display_${task.id}`, 'Tag Display');
-  task_tag_display_collapse = div_class_id_content('button', 'task_display_button', `task_tag_display_collapse_${task.id}`, `View`);
-  task_tag_display_content = div_class_id_content('div', 'task_display_content', `task_tag_display_content_${task.id}`, '');
-  for (let i = 0; i < task.tags.length; i++) {
-    task_tag_display_item =
-      div_class_id_content('div', 'task_display_item', ``, `${task.tags[i].content}`);
-    task_tag_display_content.appendChild(task_tag_display_item);
-  }
-
-  task_subtask_display.appendChild(task_subtask_display_collapse);
-  task_subtask_display.appendChild(task_subtask_display_content);
-
-  task_tag_display.appendChild(task_tag_display_collapse);
-  task_tag_display.appendChild(task_tag_display_content);
-
-  task_parent3.appendChild(task_subtask_display);
-  task_parent3.appendChild(task_tag_display);
-
-  task_grand_parent.appendChild(task_parent3);
-
-
-  displayTasks.appendChild(task_grand_parent);
-
-  alignTaskContent(task_parent, task_content);
-
-  if (task.completed) {
-    strikethroughV2(task, 1);
-  } else {
-    strikethroughV2(task, -1);
-  }
-}
-
-function addTask(task_value, ix) {
-  if (ix == -1) {
-    tasks.push(
-      {
-        'userId': 0,
-        'id': index,
-        'title': task_value[0],
-        'completed': false,
-        'category': task_value[1],
-        'priority': task_value[2],
-        'due_date': task_value[3],
-        'due_time': task_value[4],
-        'subtasks': tmp_subtasks,
-        'tags': tmp_tags,
-      });
-  } else {
-    task_value['category'] = 'Other';
-    task_value['priority'] = 'Medium';
-
-    const currentDate = new Date();
-    task_value['due_date'] = currentDate.toISOString().split('T')[0];
-    task_value['due_time'] = '23:59';
-    task_value['subtasks'] = [];
-    task_value['tags'] = [];
-    tasks.push(task_value);
-  }
   index++;
-  displayEle(tasks[tasks.length - 1]);
-  taskEventListeners(tasks[tasks.length - 1]);
+  // displayEle(tasks[tasks.length - 1]);
+  // taskEventListeners(tasks[tasks.length - 1]);
 
-  function deleteEleDOM(id, str) {
-    removeEle = document.getElementById(str + id);
-    removeEle.remove();
+  displaySearchSortTask.style.display = 'none';
+  displayTask.style.display = 'flex';
+  displaySearchSortTask.innerHTML = '';
+  displayTask.innerHTML = '';
+
+  for (let i = 0; i < tasks.length; i++) {
+    createNewCard(tasks[i], displayTask);
   }
+
 
   for (let i = 0; i < tmp_subtasks.length; i++) {
-    deleteEleDOM(tmp_subtasks[i].id, 'subtask_bar_');
+    try {
+      deleteEleDOM(tmp_subtasks[i].id, `subtask_bar_`);
+    } catch { }
   }
 
   for (let i = 0; i < tmp_tags.length; i++) {
-    deleteEleDOM(tmp_tags[i].id, 'tag_bar_');
+    try {
+      deleteEleDOM(tmp_tags[i].id, 'tag_bar_');
+    } catch { }
   }
 
   tmp_subtasks = [];
@@ -506,13 +598,14 @@ function addTask(task_value, ix) {
 }
 
 let taskForm = document.getElementById("taskForm");
+let enter_task = document.getElementById("enter_task");
+let enter_category = document.getElementById("category");
+let enter_priority = document.getElementById("priority");
+let enter_datePicker = document.getElementById("datePicker");
+let enter_timePicker = document.getElementById("timePicker");
+
 taskForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  let enter_task = document.getElementById("enter_task");
-  let enter_category = document.getElementById("category");
-  let enter_priority = document.getElementById("priority");
-  let enter_datePicker = document.getElementById("datePicker");
-  let enter_timePicker = document.getElementById("timePicker");
 
   let info_array = [
     enter_task.value,
@@ -522,12 +615,13 @@ taskForm.addEventListener("submit", (e) => {
     enter_timePicker.value,
   ]
 
-
   if (enter_task.value == "") {
     console.log("Ensure you input a valid task !");
   } else {
-    addTask(info_array, -1);
+    addTask(info_array);
+
     console.log(info_array);
+
     enter_task.value = '';
     enter_category.value = 'Other';
     enter_priority.value = 'Medium';
@@ -547,102 +641,196 @@ save_data.addEventListener("click", (e) => {
   alert("data saved sucessfully.");
 });
 
-async function getapi(url) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    if (tasks.length == 0) {
-      ix = data.length;
-      for (let i = 0; i < ix; i++) {
-        addTask(data[i], 1);
+let display_filter = 0;
+
+// search
+function filterTasksByText(text) {
+  return filtered_tasks.filter(task => {
+    // Check if the text is present in the task's title
+    if (task.title.includes(text)) {
+      return true;
+    }
+
+    // Check if the text is present in any of the subtask's title
+    for (const subtask of task.subtasks) {
+      if (subtask.content.includes(text)) {
+        return true;
       }
     }
-  } catch (error) {
-    console.error("Error in fetching API :", error);
-  }
-}
 
-function addTask2(task_value) {
-  tasks.push(task_value);
-  index++;
-  displayEle(tasks[tasks.length - 1]);
-  taskEventListeners(tasks[tasks.length - 1]);
-
-  function deleteEleDOM(id, str) {
-    removeEle = document.getElementById(str + id);
-    removeEle.remove();
-  }
-
-  for (let i = 0; i < tmp_subtasks.length; i++) {
-    deleteEleDOM(tmp_subtasks[i].id, 'subtask_bar_');
-  }
-
-  for (let i = 0; i < tmp_tags.length; i++) {
-    deleteEleDOM(tmp_tags[i].id, 'tag_bar_');
-  }
-
-  tmp_subtasks = [];
-  tmp_subtasks_id = 1;
-  tmp_tags = [];
-  tmp_tags_id = 1;
+    return false;
+  });
 }
 
 let search = document.getElementById('search');
 search.addEventListener("click", (e) => {
-  task_search = document.getElementById("enter_task_search");
-  fil_cat = document.getElementById("category_search");
-  fil_pri = document.getElementById("priority_search");
-  fil_date = document.getElementById("datePickerSearch");
-  fil_time = document.getElementById("timePickerSearch");
+  task_search = document.getElementById("enter_task_search").value;
+  fil_cat = document.getElementById("category_search").value;
+  fil_pri = document.getElementById("priority_search").value;
+  fil_date = document.getElementById("datePickerSearch").value;
+  fil_time = document.getElementById("timePickerSearch").value;
 
-  filtered_tasks = tasks.slice();
-  tasks_copy = tasks.slice();
+  console.log(task_search, fil_cat, fil_pri, fil_date, fil_time);
 
-  for (i = 0; i < tasks.length; i++) {
-    id = tasks[i].id;
-    removeEle = document.getElementById(`task_grandpa_${id}`);
-    removeEle.remove();
+  filtered_tasks = [...tasks];
+
+  let count = 0;
+
+  if (fil_cat != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.category == fil_cat);
+    count++;
+  }
+  if (fil_pri != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.priority == fil_pri);
+    count++;
+  }
+  if (fil_date != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.due_date <= fil_date);
+    count++;
+  }
+  if (fil_time != '') {
+    filtered_tasks = filtered_tasks.filter(item => item.due_time <= fil_time);
+    count++;
+  }
+  if (task_search != '') {
+    filtered_tasks = filterTasksByText(task_search);
+    count++;
   }
 
-  if (fil_cat.value != '') {
-    filtered_tasks = filtered_tasks.filter(item => item.category == fil_cat.value);
-  }
-  if (fil_pri.value != '') {
-    filtered_tasks = filtered_tasks.filter(item => item.priority == fil_pri.value);
-  }
-  if (fil_date.value != '') {
-    filtered_tasks = filtered_tasks.filter(item => item.due_date == fil_date.value);
-  }
-  if (fil_time.value != '') {
-    filtered_tasks = filtered_tasks.filter(item => item.due_time == fil_time.value);
-  }
+  console.log(filtered_tasks);
 
-  console.log(filtered_tasks[0]);
-  for (i = 0; i < filtered_tasks.length; i++) {
-    displayEle(filtered_tasks[i]);
-  }
-});
-
-let reset_search = document.getElementById('reset_search');
-search.addEventListener("click", (e) => {
-  for (i = 0; i < tasks.length; i++) {
-    id = tasks[i].id;
-    removeEle = document.getElementById(`task_grandpa_${id}`);
-    try{
-      removeEle.remove();
-    }catch (error){
-      continue;
+  if (count > 0) {
+    display_filter = 1;
+    displaySearchSortTask.style.display = 'flex';
+    displaySearchSortTask.innerHTML = '';
+    displayTask.style.display = 'none';
+    displayTask.innerHTML = '';
+    for (let i = 0; i < filtered_tasks.length; i++) {
+      // console.log(filtered_tasks.length);
+      createNewCard(filtered_tasks[i], displaySearchSortTask);
     }
   }
 
-  for (i = 0; i < tasks.length; i++) {
-    addTask(tasks[i],1);
+  count = 0;
+});
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// sort
+backlog_sort = document.getElementById("backlog");
+priority_sort = document.getElementById("priority_sort");
+dateTime_sort = document.getElementById("dateTime_sort");
+category_sort = document.getElementById("category_sort");
+
+function toggleTextColor(element) {
+  console.log(element.style.color);
+  if (element.style.color == "white" || element.style.color == "") {
+    element.style.color = "green";
+  } else {
+    element.style.color = "white";
+  }
+}
+
+backlog_sort.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+priority_sort.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+dateTime_sort.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+category_sort.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+let sort = document.getElementById('sort');
+sort.addEventListener("click", (e) => {
+
+  function sortByCompleted(a, b) {
+    return a.completed - b.completed;
+  }
+
+  function sortByDeadline(a, b) {
+    const dateA = new Date(`${a.due_date}T${a.due_time}`);
+    const dateB = new Date(`${b.due_date}T${b.due_time}`);
+    return dateA - dateB;
+  }
+
+  function sortByPriority(a, b) {
+    const priorityOrder = ['High', 'Medium', 'Low']; // Define the priority order
+    return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+  }
+
+  function sortByCategory(a, b) {
+    if (a.category < b.category) {
+      return -1;
+    } else if (a.category > b.category) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  count = 0;
+  if (backlog_sort.style.color == "green") {
+    filtered_tasks.sort(sortByCompleted);
+    count++;
+  }
+
+  if (priority_sort.style.color == "green") {
+    filtered_tasks.sort(sortByPriority);
+    count++;
+  }
+
+  if (dateTime_sort.style.color == "green") {
+    filtered_tasks.sort(sortByDeadline);
+    count++;
+  }
+
+  if (category_sort.style.color == "green") {
+    filtered_tasks.sort(sortByCategory);
+    count++;
+  }
+
+  console.log(filtered_tasks);
+
+  if (count > 0) {
+    display_filter = 1;
+    displaySearchSortTask.style.display = 'flex';
+    displaySearchSortTask.innerHTML = '';
+    displayTask.style.display = 'none';
+    displayTask.innerHTML = '';
+    for (let i = 0; i < filtered_tasks.length; i++) {
+      createNewCard(filtered_tasks[i], displaySearchSortTask);
+    }
+  }
+
+  count = 0;
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+//search sort reset
+let reset_search = document.getElementById('reset_search');
+reset_search.addEventListener("click", (e) => {
+  filtered_tasks = [...tasks];
+  display_filter = 0;
+  displaySearchSortTask.style.display = 'none';
+  displayTask.style.display = 'flex';
+  displaySearchSortTask.innerHTML = '';
+  displayTask.innerHTML = '';
+  for (let i = 0; i < tasks.length; i++) {
+    createNewCard(tasks[i], displayTask);
   }
 });
 
-
-getapi("https://jsonplaceholder.typicode.com/todos");
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // let info_array = [
 //   'enter_task.value',
@@ -655,18 +843,40 @@ getapi("https://jsonplaceholder.typicode.com/todos");
 // tmp_subtasks = [{ 'id': 0, 'content': 'sfw' }, { 'id': 1, 'content': 'sfw' }, { 'id': 2, 'content': 'sfw' }, { 'id': 3, 'content': 'sfw' }, { 'id': 0, 'content': 'sfw' },];
 // tmp_tags = [{ 'id': 0, 'content': 'sfw' }, { 'id': 1, 'content': 'sfw' }, { 'id': 2, 'content': 'sfw' }, { 'id': 3, 'content': 'sfw' }];
 // addTask(info_array, -1);
-const storedArrayJson = localStorage.getItem('task_data');
-const storedArray = JSON.parse(storedArrayJson);
 
-if (storedArray == null) {
-  getapi("https://jsonplaceholder.typicode.com/todos");
-} else {
-  const storedIntegerString = localStorage.getItem('index');
-  index = parseInt(storedIntegerString);
-  tasks = storedArray;
-  // console.log(tasks);
-  for (let i = 0; i < tasks.length; i++) {
-    displayEle(tasks[i]);
-    taskEventListeners(tasks[i]);
-  }
-}
+// const storedArrayJson = localStorage.getItem('task_data');
+// const storedArray = JSON.parse(storedArrayJson);
+
+// const storedIntegerString = localStorage.getItem('index');
+// index = parseInt(storedIntegerString);
+// tasks = storedArray;
+
+
+
+// tasks.push(
+//   {
+//     'id': index,
+//     'title': task_value[0],
+//     'completed': false,
+//     'category': task_value[1],
+//     'priority': task_value[2],
+//     'due_date': task_value[3],
+//     'due_time': task_value[4],
+//     'subtasks': tmp_subtasks,
+//     'tags': tmp_tags,
+//   }
+// );
+tmp_subtasks = [{ 'id': 1, 'content': 'a' }, { 'id': 2, 'content': 'b' }, { 'id': 3, 'content': 'c' }, { 'id': 4, 'content': 'd' }, { 'id': 5, 'content': 'w' },];
+tmp_tags = [{ 'id': 1, 'content': 'x' }, { 'id': 2, 'content': 'y' }, { 'id': 3, 'content': 'z' }, { 'id': 4, 'content': 'f' }];
+addTask(['abc', 'Personal', 'High', new Date().toISOString().slice(0, 8) + '30', '23:14']);
+addTask(['abcdefg', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
+addTask(['abc ave', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
+addTask(['abcdefg wed w', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
+addTask(['abcdefg qegvlkn', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
+
+let filtered_tasks = [...tasks];
+// console.log(tasks);
+// for (let i = 0; i < tasks.length; i++) {
+//   displayEle(tasks[i]);
+//   taskEventListeners(tasks[i]);
+// }

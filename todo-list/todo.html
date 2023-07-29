@@ -21,66 +21,75 @@
 
     <!-- Header Todo List for today -->
 
-    <div class="parent">
-        <form id="taskForm">
-            <textarea type="text" class="text_area" id="enter_task" placeholder="Enter the task to be done"></textarea>
-
-            <div class="form_data">
-                <div class="form_line_1">
-                    <div class="input_portion">
-                        <div for="category">Category</div>
-                        <select id="category">
-                            <option value="Personal">Personal</option>
-                            <option value="Work">Work</option>
-                            <option value="Home">Home</option>
-                            <option value="Family">Family</option>
-                            <option value="Health">Health</option>
-                            <option value="Self-growth">Self-growth</option>
-                            <option value="Finance">Finance</option>
-                            <option value="Travel">Travel</option>
-                            <option value="Social">Social</option>
-                            <option value="Other" selected>Other</option>
-                        </select>
-                    </div>
-
-                    <div class="input_portion">
-                        <div for="priority">Priority</div>
-                        <select id="priority">
-                            <option value="High">High</option>
-                            <option value="Medium" selected>Medium</option>
-                            <option value="Low">Low</option>
-                        </select>
-                    </div>
-
-                    <div class="input_portion">
-                        <div for="datePicker">Date</div>
-                        <input type="date" id="datePicker">
-                    </div>
-
-                    <div class="input_portion">
-                        <div for="timePicker">Time</div>
-                        <input type="time" id="timePicker">
-                    </div>
-                </div>
-            </div>
-            <div class="tag_container">
-                <div class="input_portion">
-                    <div style="display: flex;">
-                        <input type="text" id="tag_text" placeholder="Add Tags">
-                        <button id="tag_button">✔</button>
-                    </div>
-                </div>
-                <div class="tag_display">The tags will appear here</div>
-            </div>
-
-            <div class="save_submit">
-                <button class='task_submit' id="openModalBtn" type="button">Manage Subtasks</button>
-                <input type="submit" class='task_submit' value="Add Task">
-                <button id="save_data" class='task_submit' type="button">Save data</button>
-                <button id="activity_logs" class='task_submit' type="button">Activity Log</button>
-            </div>
-        </form>
+    <div class="toggle_switch">
+        <div>
+            <p>Add Task</p>
+        </div>
+        <label class="switch">
+            <input id="add_task_toggle" type="checkbox" name="switchSearch">
+            <span class="slider round"></span>
+        </label>
     </div>
+    <!-- <div class="parent"> -->
+    <form id="taskForm">
+        <textarea type="text" class="text_area" id="enter_task" placeholder="Enter the task to be done"></textarea>
+
+        <div class="form_data">
+            <div class="form_line_1">
+                <div class="input_portion">
+                    <div for="category">Category</div>
+                    <select id="category">
+                        <option value="Personal">Personal</option>
+                        <option value="Work">Work</option>
+                        <option value="Home">Home</option>
+                        <option value="Family">Family</option>
+                        <option value="Health">Health</option>
+                        <option value="Self-growth">Self-growth</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Social">Social</option>
+                        <option value="Other" selected>Other</option>
+                    </select>
+                </div>
+
+                <div class="input_portion">
+                    <div for="priority">Priority</div>
+                    <select id="priority">
+                        <option value="High">High</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+
+                <div class="input_portion">
+                    <div for="datePicker">Date</div>
+                    <input type="date" id="datePicker">
+                </div>
+
+                <div class="input_portion">
+                    <div for="timePicker">Time</div>
+                    <input type="time" id="timePicker">
+                </div>
+            </div>
+        </div>
+        <div class="tag_container">
+            <div class="input_portion">
+                <div style="display: flex;">
+                    <input type="text" id="tag_text" placeholder="Add Tags">
+                    <button id="tag_button">✔</button>
+                </div>
+            </div>
+            <div class="tag_display">The tags will appear here</div>
+        </div>
+
+        <div class="save_submit">
+            <button class='task_submit' id="openModalBtn" type="button">Manage Subtasks</button>
+            <input type="submit" class='task_submit' value="Add Task">
+            <button id="save_data" class='task_submit' type="button">Save data</button>
+            <button id="activity_logs" class='task_submit' type="button">Activity Log</button>
+        </div>
+    </form>
+    <!-- </div> -->
 
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -97,14 +106,31 @@
         </div>
     </div>
 
-    <!-- <div class="progress-bar">
-        <div class="progress"></div>
+    <div id="editmodal" class="editmodal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1>Subtasks</h1>
+            <div class="textarea_flex">
+                <textarea type="text" class="text_area" id="text_area_subtasks2"
+                    placeholder="Enter the subtasks"></textarea>
+                <button id="submit_subtask">✔</button>
+            </div>
+            <div class="subtasks">
+            </div>
+            <button class="submit_subtasks">Done</button>
+        </div>
     </div>
-    <div class="completed"></div> -->
-    <div style="margin-bottom: 50px;"></div>
 
-
-    <form id="taskForm">
+    <div class="toggle_switch">
+        <div>
+            <p>Search</p>
+        </div>
+        <label class="switch">
+            <input id="search_task_toggle" type="checkbox" name="switchSearch">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <form id="taskFormSearch">
         <textarea type="text" class="text_area" id="enter_task_search"
             placeholder="Enter the task/subtask to be searched"></textarea>
 
@@ -149,51 +175,53 @@
             </div>
         </div>
 
-        <!-- <div class="tag_container">
-            <div class="input_portion">
-                <div style="display: flex;">
-                    <input type="text" id="tag_text_search" placeholder="Search Tags">
-                    <button id="tag_button_search">✔</button>
-                </div>
-            </div>
-            <div class="tag_display">The searched tags will appear here</div>
-        </div> -->
 
-        <div class="save_submit">
-            <button id="backlog" class='task_submit' type="button">Backlog</button>
+        <div class="save_submit endSort">
             <button id="search" class='task_submit' type="button">Search</button>
         </div>
-
+    </form>
+    <div class="toggle_switch">
+        <div>
+            <p>Sort</p>
+        </div>
+        <label class="switch">
+            <input id="sort_task_toggle" type="checkbox" name="switchSearch">
+            <span class="slider round"></span>
+        </label>
+    </div>
+    <form id="taskFormSort">
         <div class="save_submit">
+            <button id="backlog" class='task_submit' type="button">Backlog</button>
             <button id="priority_sort" class='task_submit' type="button">Priority</button>
             <button id="dateTime_sort" class='task_submit' type="button">DateTime</button>
             <button id="category_sort" class='task_submit' type="button">Category </button>
-            <button id="sort" class='task_submit' type="button">Sort</button>
         </div>
 
-        <div class="save_submit">
-            <button id="reset_sort" class='task_submit' type="button">Reset Sort</button>
-            <button id="reset_search" class='task_submit' type="button">Reset Search</button>
+        <div class="save_submit endSort">
+            <button id="sort" class='task_submit' type="button">Sort</button>
         </div>
     </form>
 
+    <div class="save_submit">
+        <button id="reset_search" class='task_submit' type="button">Reset Search & Sort</button>
+    </div>
+
+
+    <div class="toggle_switch">
+        <div>
+            <p>Display</p>
+        </div>
+        <label class="switch">
+            <input id="display_task_toggle" type="checkbox" name="switchSearch">
+            <span class="slider round"></span>
+        </label>
+    </div>
     <!-- Display Task -->
     <div id="displayTask">
-        <!-- <div class="task">
-            <div> Task </div>
-            <button> Edit </button>
-            <button> Delete </button>
-        </div>
-        <div class="task">
-            <div> Task </div>
-            <button> Edit </button>
-            <button> Delete </button>
-        </div>
-        <div class="task">
-            <div> Task </div>
-            <button> Edit </button>
-            <button> Delete </button>
-        </div> -->
+    </div>
+
+    <!-- Display Search;Sort Task -->
+    <div id="displaySearchSortTask">
     </div>
 
     <script src="todo.js"></script>

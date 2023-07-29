@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-list Manager</title>
+</head>
+
+<body>
+    <h1>Todo List</h1>
+    <div class="search_container">
+        <!-- <form id="input_form"> -->
+            <input type="text" id="enter_task" name="enter_task" placeholder="Enter task">
+            <label for="enter_task_category">Category</label>
+            <select name="enter_task_category" id="enter_task_category">
+                <option value="Personal">Personal</option>
+                <option value="Work">Work</option>
+                <option value="Home">Home</option>
+                <option value="Family">Family</option>
+                <option value="Health">Health</option>
+                <option value="Self-growth">Self-growth</option>
+                <option value="Finance">Finance</option>
+                <option value="Travel">Travel</option>
+                <option value="Social">Social</option>
+                <option value="Unknown" selected>Unknown</option>
+            </select>
+            <label for="enter_priority">Priority</label>
+            <select name="enter_priority" id="enter_priority">
+                <option value="None" selected>None</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low" selected>Low</option>
+            </select>
+            <input type="time" id="enter_due_time" name="enter_due_time">
+            <input type="date" id="enter_due_date" name="enter_due_date">
+            <br>
+            <input type="text" id="enter_subtask" name="enter_subtask" placeholder="Add Subtasks">
+            <button onclick="addSubTask()" type="button">Add Subtasks</button>
+            <div id="display_subtasks"></div>
+            <input type="text" id="enter_tag" name="enter_tag" placeholder="Add Tag #______">
+            <button onclick="addTag()" type="button">Add Tag</button>
+            <div id="display_tags"></div>
+            <button id="submitTask">Add Task</button>
+        <!-- </form> -->
+    </div>
+    <div class="displayTasks">
+
+    </div>
+    <script src="todo.js"></script>
+</body>
+
+</html>

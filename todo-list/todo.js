@@ -558,21 +558,28 @@ doneEditBtn.addEventListener('click', function () {
           <button id="card_edit_${tasks[ix1].id}" class="edit-button">Edit</button>
           <button id="card_delete_${tasks[ix1].id}" class="delete-button">Delete</button>
       </div>
+      <button id="card_complete_${tasks[ix1].id}" class="complete_button">Incomplete</button>
   `;
 
-  card_edit_button = document.getElementById(`card_edit_${tasks[ix1].id}`);
+  let card_edit_button = document.getElementById(`card_edit_${tasks[ix1].id}`);
   card_edit_button.addEventListener("click", (e) => {
     editmodal.style.display = 'block';
     lastClickedId = tasks[ix1].id;
     updatemodalElements(tasks[ix1]);
   });
 
-  card_delete_button = document.getElementById(`card_delete_${tasks[ix1].id}`);
+  let card_delete_button = document.getElementById(`card_delete_${tasks[ix1].id}`);
   card_delete_button.addEventListener("click", (e) => {
     deleteEleDOM(tasks[ix1].id, "card_");
     tasks = tasks.filter(task => task.id !== tasks[ix1].id);
     filtered_tasks = filtered_tasks.filter(task => task.id !== tasks[ix1].id);
   });
+
+  let card_complete_button = document.getElementById(`card_complete_${tasks[ix1].id}`);
+  card_complete_button.addEventListener("click", (e) => {
+    card_complete_status(tasks[ix1]);
+  });
+
 });
 
 
@@ -581,43 +588,6 @@ doneEditBtn.addEventListener('click', function () {
 
 ////////////////////////////////////////////////////////////////
 
-function updatecardElements(task_) {
-  let card_id = `card_${task_.id}`;
-  let card = document.getElementById(card_id);
-
-  let card_title = card.querySelector('.title');
-  card_title.textContent = task_.title;
-
-  // let card_info = card.querySelector('.info');
-
-  // let card_tagContents = task_.tags.map(tag => tag.content);
-  // let commaSeparatedTags = card_tagContents.join('</strong>, <strong>');
-  // commaSeparatedTags = commaSeparatedTags == '' ? 'None' : `<strong>${commaSeparatedTags}</strong>`;
-
-  // let subtasks_element = `<ul class="subtask-list">`;
-  // for (let i = 0; i < task_.subtasks.length; i++) {
-  //   subtasks_element += `<li>${task_.subtasks[i].content}</li>`;
-  // }
-  // subtasks_element += `</ul>`;
-  // let completed_status = task_.completed ? 'Yes' : 'No';
-
-  // card_info.innerHTML = `
-  //     <p><strong>Completed:</strong> ${completed_status}</p>
-  //     <p><strong>Category:</strong> ${task_.category}</p>
-  //     <p><strong>Priority:</strong> ${task_.priority}</p>
-  //     <p><strong>Due Date:</strong> ${task_.due_date}</p>
-  //     <p><strong>Due Time:</strong> ${task_.due_time}</p>
-  //     <p><strong>Subtasks:</strong> ${task_.subtasks.length}</p>
-  //     ${subtasks_element}
-  //     <p class="card_tag"><strong>Tags:</strong> ${commaSeparatedTags}</p>
-  //     <div class="buttons">
-  //         <button id="card_edit_${task_.id}" class="edit-button">Edit</button>
-  //         <button id="card_delete_${task_.id}" class="delete-button">Delete</button>
-  //     </div>
-  // `;
-
-
-}
 
 let lastClickedId = 0;
 function createNewCard(task_, display_) {
@@ -635,6 +605,7 @@ function createNewCard(task_, display_) {
 
   const infoElement = document.createElement('div');
   infoElement.classList.add('info');
+  infoElement.id = `info_${task_.id}`;
 
   const tagContents = task_.tags.map(tag => tag.content);
   let commaSeparatedTags = tagContents.join('</strong>, <strong>');
@@ -646,9 +617,8 @@ function createNewCard(task_, display_) {
     subtasks_element += `<li>${task_.subtasks[i].content}</li>`;
   }
   subtasks_element += `</ul>`;
-  let completed_status = task_.completed ? 'Yes' : 'No';
+
   infoElement.innerHTML = `
-      <p><strong>Completed:</strong> ${completed_status}</p>
       <p><strong>Category:</strong> ${task_.category}</p>
       <p><strong>Priority:</strong> ${task_.priority}</p>
       <p><strong>Due Date:</strong> ${task_.due_date}</p>
@@ -660,6 +630,7 @@ function createNewCard(task_, display_) {
           <button id="card_edit_${task_.id}" class="edit-button">Edit</button>
           <button id="card_delete_${task_.id}" class="delete-button">Delete</button>
       </div>
+      <button id="card_complete_${task_.id}" class="complete_button">Incomplete</button>
   `;
 
   newCard.addEventListener('dragstart', dragStart);
@@ -670,21 +641,52 @@ function createNewCard(task_, display_) {
   newCard.appendChild(infoElement);
   cardContainer.appendChild(newCard);
 
-  card_edit_button = document.getElementById(`card_edit_${task_.id}`);
+  completion_status = document.getElementById(`card_complete_${task_.id}`);
+  if (!task_.completed) {
+    task_.completed = false;
+    completion_status.innerText = 'Incomplete';
+    completion_status.style.backgroundColor = 'darkslategray';
+
+  } else {
+    task_.completed = true;
+    completion_status.innerText = 'Completed';
+    completion_status.style.backgroundColor = 'green';
+  }
+
+  let card_edit_button = document.getElementById(`card_edit_${task_.id}`);
   card_edit_button.addEventListener("click", (e) => {
     editmodal.style.display = 'block';
     lastClickedId = task_.id;
     updatemodalElements(task_);
-    // updatecardElements(task_);
   });
 
-  card_delete_button = document.getElementById(`card_delete_${task_.id}`);
+  let card_delete_button = document.getElementById(`card_delete_${task_.id}`);
   card_delete_button.addEventListener("click", (e) => {
     deleteEleDOM(task_.id, "card_");
     tasks = tasks.filter(task => task.id !== task_.id);
     filtered_tasks = filtered_tasks.filter(task => task.id !== task_.id);
   });
 
+  let card_complete_button = document.getElementById(`card_complete_${task_.id}`);
+  card_complete_button.addEventListener("click", (e) => {
+    card_complete_status(task_);
+  });
+
+}
+
+function card_complete_status(task_) {
+  let card_complete_button = document.getElementById(`card_complete_${task_.id}`);
+
+  if (task_.completed) {
+    task_.completed = false;
+    card_complete_button.innerText = 'Incomplete';
+    card_complete_button.style.backgroundColor = 'darkslategray';
+
+  } else {
+    task_.completed = true;
+    card_complete_button.innerText = 'Completed';
+    card_complete_button.style.backgroundColor = 'green';
+  }
 }
 
 let draggedCard = null;
@@ -1198,3 +1200,6 @@ let filtered_tasks = [...tasks];
 //   displayEle(tasks[i]);
 //   taskEventListeners(tasks[i]);
 // }
+
+const clickEvent = new Event('click');
+reset_search.dispatchEvent(clickEvent);

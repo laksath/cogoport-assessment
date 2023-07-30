@@ -30,7 +30,7 @@ h1 {
 #taskFormSortDesc,
 #displayTask,
 #displaySearchSortTask {
-    display: none;
+    /* display: none; */
     width: 90%;
     border: none;
     margin-bottom: 30px;
@@ -190,11 +190,32 @@ input:checked+.slider:before {
 .buttons button {
     padding: 8px 12px;
     border: none;
-    border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
     color: #fff;
     width: 50%;
+}
+
+.buttons .edit-button{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.buttons .delete-button{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.complete_button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #fff;
+    background-color: darkslategray;
+    margin-top: 5px;
+    width: 100%;
 }
 
 .edit-button {

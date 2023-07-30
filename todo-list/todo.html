@@ -75,11 +75,11 @@
         <div class="tag_container">
             <div class="input_portion">
                 <div style="display: flex;">
-                    <input type="text" id="tag_text" placeholder="Add Tags">
+                    <input type="text" id="tag_text" class="tag_text" placeholder="Add Tags">
                     <button id="tag_button">✔</button>
                 </div>
             </div>
-            <div class="tag_display">The tags will appear here</div>
+            <div id="tag_display" class="tag_display">The tags will appear here</div>
         </div>
 
         <div class="save_submit">
@@ -109,15 +109,67 @@
     <div id="editmodal" class="editmodal">
         <div class="modal-content">
             <span class="close">&times;</span>
+
+            <div id="editModelInput">
+                <textarea type="text" class="text_area" id="edit_enter_task"
+                    placeholder="Enter the task to be done"></textarea>
+                <div class="form_data">
+                    <div class="form_line_1">
+                        <div class="input_portion">
+                            <div for="category">Category</div>
+                            <select id="edit_category">
+                                <option value="Personal">Personal</option>
+                                <option value="Work">Work</option>
+                                <option value="Home">Home</option>
+                                <option value="Family">Family</option>
+                                <option value="Health">Health</option>
+                                <option value="Self-growth">Self-growth</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Social">Social</option>
+                                <option value="Other" selected>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="input_portion">
+                            <div for="priority">Priority</div>
+                            <select id="edit_priority">
+                                <option value="High">High</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+
+                        <div class="input_portion">
+                            <div for="datePicker">Date</div>
+                            <input type="date" id="edit_datePicker">
+                        </div>
+
+                        <div class="input_portion">
+                            <div for="timePicker">Time</div>
+                            <input type="time" id="edit_timePicker">
+                        </div>
+                    </div>
+                </div>
+                <div class="tag_container">
+                    <div class="input_portion">
+                        <div style="display: flex;">
+                            <input type="text" id="edit_tag_text" class="tag_text" placeholder="Add Tags">
+                            <button id="edit_tag_button">✔</button>
+                        </div>
+                    </div>
+                    <div id="edit_tag_display" class="tag_display">The tags will appear here</div>
+                </div>
+            </div>
             <h1>Subtasks</h1>
             <div class="textarea_flex">
                 <textarea type="text" class="text_area" id="text_area_subtasks2"
                     placeholder="Enter the subtasks"></textarea>
-                <button id="submit_subtask">✔</button>
+                <button id="submit_subtask2">✔</button>
             </div>
-            <div class="subtasks">
+            <div class="editsubtasks">
             </div>
-            <button class="submit_subtasks">Done</button>
+            <button class="submit_edit_modal">Done</button>
         </div>
     </div>
 

@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //Tags are appended to the tags text field
 const tag_text = document.getElementById('tag_text');
 const tag_button = document.getElementById('tag_button');
-const tag_display = document.getElementsByClassName('tag_display')[0];
+const tag_display = document.getElementById('tag_display');
 let tmp_tags = [];
 let tmp_tags_id = 1;
 
@@ -237,9 +237,9 @@ window.addEventListener('click', (event) => {
 });
 doneBtn.addEventListener('click', function () { closeModal(); });
 
-text_area_subtasks = document.getElementById('text_area_subtasks');
-submit_subtask = document.getElementById('submit_subtask');
-subtasks = document.getElementsByClassName('subtasks')[0];
+let text_area_subtasks = document.getElementById('text_area_subtasks');
+let submit_subtask = document.getElementById('submit_subtask');
+let subtasks = document.getElementsByClassName('subtasks')[0];
 
 function create_subtask_bars(subtask_content, subtask_id) {
   const subtask_bar = div_class_id_content('div', 'subtask_bar', `subtask_bar_${subtask_id}`, '');
@@ -253,9 +253,9 @@ function create_subtask_bars(subtask_content, subtask_id) {
   subtasks.appendChild(subtask_bar);
 }
 
-function editSubEle(tmp_subtasks, id) {
-  subtask_content_ = document.getElementById(`subtask_content_${id}`);
-  subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
+function editSubEle(tmp_subtasks, content_, bar_edit, id) {
+  subtask_content_ = document.getElementById(`${content_}${id}`);
+  subtask_bar_edit = document.getElementById(`${bar_edit}${id}`);
 
   if (subtask_bar_edit.innerText == 'Edit') {
     subtask_bar_edit.innerText = 'Save';
@@ -294,7 +294,7 @@ submit_subtask.addEventListener('click', function () {
 
     subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
     subtask_bar_edit.addEventListener('click', function (event) {
-      editSubEle(tmp_subtasks, id);
+      editSubEle(tmp_subtasks, 'subtask_content_', 'subtask_edit_', id);
     });
 
     tmp_subtasks_id++;
@@ -303,119 +303,308 @@ submit_subtask.addEventListener('click', function () {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-// let tmp_subtasks = [];
-// let tmp_subtasks_id = 1;
-
-// //Modal Code for subtasks
-// const openModalBtn = document.getElementById('openModalBtn');
-// const modal = document.getElementById('myModal');
 const editmodal = document.getElementById('editmodal');
-// const closeModalBtn = modal.querySelector('.close');
 const closeEditModalBtn = editmodal.querySelector('.close');
-// const doneBtn = modal.querySelector('.submit_subtasks');
-const doneEditBtn = editmodal.querySelector('.submit_subtasks');
-
-// function openModal() {
-//   modal.style.display = 'block';
-// }
-
-// function closeModal() {
-//   modal.style.display = 'none';
-// }
+const doneEditBtn = editmodal.querySelector('.submit_edit_modal');
 
 function closeEditModal() {
   editmodal.style.display = 'none';
 }
 
-// openModalBtn.addEventListener('click', openModal);
-// closeModalBtn.addEventListener('click', closeModal);
+
 closeEditModalBtn.addEventListener('click', closeEditModal);
-// window.addEventListener('click', (event) => {
-//   if (event.target === modal) {
-//     closeModal();
-//   }
-// });
 window.addEventListener('click', (event) => {
   if (event.target === modal) {
     closeEditModalBtn();
   }
 });
 
-// doneBtn.addEventListener('click', function () { closeModal(); });
-doneEditBtn.addEventListener('click', function () { closeEditModal(); });
+let edit_enter_task = document.getElementById('edit_enter_task');
+let edit_category = document.getElementById('edit_category');
+let edit_priority = document.getElementById('edit_priority');
+let edit_datePicker = document.getElementById('edit_datePicker');
+let edit_timePicker = document.getElementById('edit_timePicker');
+let edit_tag_text = document.getElementById('edit_tag_text');
+let edit_tag_display = document.getElementById('edit_tag_display');
+let text_area_subtasks2 = document.getElementById('text_area_subtasks2');
+let submit_subtask2 = document.getElementById('submit_subtask2');
+let editsubtasks = document.getElementsByClassName('editsubtasks')[0];
 
-// text_area_subtasks = document.getElementById('text_area_subtasks');
-// submit_subtask = document.getElementById('submit_subtask');
-// subtasks = document.getElementsByClassName('subtasks')[0];
 
-// function create_subtask_bars(subtask_content, subtask_id) {
-//   const subtask_bar = div_class_id_content('div', 'subtask_bar', `subtask_bar_${subtask_id}`, '');
-//   const subtask_bar_content = div_class_id_content('div', 'subtask_bar_content', `subtask_content_${subtask_id}`, subtask_content);
-//   const subtask_bar_edit = div_class_id_content('button', 'subtask_bar_edit', `subtask_edit_${subtask_id}`, 'Edit');
-//   const subtask_bar_delete = div_class_id_content('button', 'subtask_bar_delete', `subtask_delete_${subtask_id}`, 'Remove');
+function edit_create_subtask_bars(subtask_content, subtask_id) {
+  const edit_subtask_bar = div_class_id_content('div', 'subtask_bar', `edit_subtask_bar_${subtask_id}`, '');
+  const edit_subtask_bar_content = div_class_id_content('div', 'subtask_bar_content', `edit_subtask_content_${subtask_id}`, subtask_content);
+  const edit_subtask_bar_edit = div_class_id_content('button', 'subtask_bar_edit', `edit_subtask_edit_${subtask_id}`, 'Edit');
+  const edit_subtask_bar_delete = div_class_id_content('button', 'subtask_bar_delete', `edit_subtask_delete_${subtask_id}`, 'Remove');
 
-//   subtask_bar.appendChild(subtask_bar_content);
-//   subtask_bar.appendChild(subtask_bar_edit);
-//   subtask_bar.appendChild(subtask_bar_delete);
-//   subtasks.appendChild(subtask_bar);
-// }
+  edit_subtask_bar.appendChild(edit_subtask_bar_content);
+  edit_subtask_bar.appendChild(edit_subtask_bar_edit);
+  edit_subtask_bar.appendChild(edit_subtask_bar_delete);
+  editsubtasks.appendChild(edit_subtask_bar);
+}
 
-// function editSubEle(tmp_subtasks, id) {
-//   subtask_content_ = document.getElementById(`subtask_content_${id}`);
-//   subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
+submit_subtask2.addEventListener('click', function () {
+  console.log("*");
+  let ix1 = 0;
+  for (ix1; ix1 < tasks.length; ix1++) {
+    if (tasks[ix1].id == lastClickedId) break;
+  }
 
-//   if (subtask_bar_edit.innerText == 'Edit') {
-//     subtask_bar_edit.innerText = 'Save';
-//     subtask_content_.style.background = 'rgba(47, 47, 47, 0.5)'
-//     subtask_content_.style.marginRight = '2px';
-//     subtask_content_.style.border = '2px solid white';
-//     subtask_content_.style.borderRadius = '5px';
-//   } else {
-//     subtask_bar_edit.innerText = 'Edit';
-//     subtask_content_.style.background = 'none';
-//     subtask_content_.style.marginRight = '0';
-//     subtask_content_.style.border = 'none';
-//     subtask_content_.style.borderRadius = 'none';
+  // let ix2 = 0;
+  // for (ix2; ix2 < filtered_tasks.length; ix2++) {
+  //   if (filtered_tasks[ix2].subtask_id == lastClickedId) break;
+  // }
 
-//     for (let i = 0; i < tmp_subtasks.length; i++) {
-//       if (tmp_subtasks[i].id == id) {
-//         tmp_subtasks[i].content = subtask_content_.innerText;
-//       }
-//     }
-//   }
-//   subtask_content_.contentEditable = !subtask_content_.isContentEditable;
-// }
+  if (ix1 != tasks.length) {
+    const subtask_string = text_area_subtasks2.value;
+    if (subtask_string != '') {
+      const id = tasks[ix1].subtask_id;
+      tasks[ix1].subtasks.push({ 'id': id, 'content': subtask_string });
+      // filtered_tasks[ix2].subtasks.push({ 'id': id, 'content': subtask_string });
 
-// submit_subtask.addEventListener('click', function () {
-//   const subtask_string = text_area_subtasks.value;
-//   if (subtask_string != '') {
-//     const id = tmp_subtasks_id;
-//     tmp_subtasks.push({ 'id': id, 'content': subtask_string });
-//     create_subtask_bars(subtask_string, id);
-//     text_area_subtasks.value = '';
+      edit_create_subtask_bars(subtask_string, id);
+      text_area_subtasks2.value = '';
 
-//     subtask_bar_delete = document.getElementById(`subtask_delete_${id}`);
-//     subtask_bar_delete.addEventListener('click', function (event) {
-//       deleteEle(tmp_subtasks, id, 'subtask_bar_');
-//     });
+      subtask_bar_delete = document.getElementById(`edit_subtask_delete_${id}`);
+      subtask_bar_delete.addEventListener('click', function (event) {
+        deleteEle(tasks[ix1].subtasks, id, 'edit_subtask_bar_');
+        // deleteEle(filtered_tasks[ix2].subtasks, id, 'edit_subtask_bar_');
+      });
 
-//     subtask_bar_edit = document.getElementById(`subtask_edit_${id}`);
-//     subtask_bar_edit.addEventListener('click', function (event) {
-//       editSubEle(tmp_subtasks, id);
-//     });
+      subtask_bar_edit = document.getElementById(`edit_subtask_edit_${id}`);
+      subtask_bar_edit.addEventListener('click', function (event) {
+        editSubEle(tasks[ix1].subtasks, 'edit_subtask_content_', 'edit_subtask_edit_', id);
+        // editSubEle(filtered_tasks[ix2].subtasks, 'edit_subtask_content_', 'edit_subtask_edit_', id);
+      });
 
-//     tmp_subtasks_id++;
+      console.log();
+      tasks[ix1].subtask_id += 1;
+      console.log(id, tasks[ix1].subtask_id);
+    }
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//editModal Tags
+
+const edit_tag_button = document.getElementById('edit_tag_button');
+// let edit_tag_text = document.getElementById('edit_tag_text');
+// let edit_tag_display = document.getElementById('edit_tag_display');
+
+function edit_create_tag_bars(tag_content, tag_id) {
+  const edit_tag_bar = div_class_id_content('div', 'tag_bar', `edit_tag_bar_${tag_id}`, '');
+  const edit_tag_bar_content = div_class_id_content('div', 'tag_bar_content', `edit_tag_content_${tag_id}`, tag_content);
+  const edit_tag_bar_delete = div_class_id_content('div', 'tag_bar_delete', `edit_tag_delete_${tag_id}`, 'x');
+
+  edit_tag_bar.appendChild(edit_tag_bar_content);
+  edit_tag_bar.appendChild(edit_tag_bar_delete);
+  edit_tag_display.appendChild(edit_tag_bar);
+}
+
+function edit_check_text_display(tag_val) {
+  if (tag_val.length != 0) {
+    edit_tag_display.firstChild.textContent = '';
+    edit_tag_display.style.alignItems = 'stretch';
+    edit_tag_display.style.justifyContent = 'flex-start';
+  } else {
+    edit_tag_display.firstChild.textContent = 'The tags will appear here';
+    edit_tag_display.style.alignItems = 'center';
+    edit_tag_display.style.justifyContent = 'center';
+  }
+}
+
+edit_tag_button.addEventListener('click', function (event) {
+  event.preventDefault();
+
+  let tag_text_val = edit_tag_text.value.replace(/ /g, '_');
+
+  let ix1 = 0;
+  for (ix1; ix1 < tasks.length; ix1++) {
+    if (tasks[ix1].id == lastClickedId) break;
+  }
+
+  if (ix1 < tasks.length && tag_text_val != '') {
+    const id = tasks[ix1].tag_id;
+    tag_text_val = `#${tag_text_val}`;
+    tasks[ix1].tags.push({ 'id': id, 'content': tag_text_val });
+    edit_create_tag_bars(tag_text_val, id);
+    const tag_bar_delete = document.getElementById(`edit_tag_delete_${id}`);
+    tag_bar_delete.addEventListener('click', function (event) {
+      deleteEle(tasks[ix1].tags, id, 'edit_tag_bar_');
+      edit_check_text_display(tasks[ix1].tags);
+    });
+    tasks[ix1].tag_id += 1;
+  }
+
+  edit_check_text_display(tasks[ix1].tags);
+  edit_tag_text.value = '';
+});
+
+// edit_tag_text.addEventListener('keydown', function (event) {
+//   if (event.keyCode === 13) {
+//     event.preventDefault();
+//     edit_tag_button.click();
 //   }
 // });
+
+////////////////////////////////////////////////////////////////
+function updatemodalElements(task_) {
+  editsubtasks.innerHTML = '';
+  edit_tag_text.value = '';
+  edit_tag_display.innerHTML = 'The tags will appear here';
+
+  edit_enter_task.value = task_.title;
+  edit_category.value = task_.category;
+  edit_priority.value = task_.priority;
+  edit_datePicker.value = task_.due_date;
+  edit_timePicker.value = task_.due_time;
+
+  subtask_contents = task_.subtasks;
+  text_area_subtasks2.value = '';
+
+
+  tags_content = task_.tags;
+
+  // create what's not there
+  for (let i = 0; i < tags_content.length; i++) {
+    const id = tags_content[i].id;
+    edit_create_tag_bars(tags_content[i].content, id);
+    const tag_bar_delete = document.getElementById(`edit_tag_delete_${id}`);
+    tag_bar_delete.addEventListener('click', function (event) {
+      deleteEle(task_.tags, id, 'edit_tag_bar_');
+      edit_check_text_display(task_.tags);
+    });
+  }
+  edit_check_text_display(task_.tags);
+
+
+  // create what's not there
+  for (let i = 0; i < subtask_contents.length; i++) {
+    edit_create_subtask_bars(subtask_contents[i].content, subtask_contents[i].id);
+
+    subtask_bar_delete = document.getElementById(`edit_subtask_delete_${subtask_contents[i].id}`);
+    subtask_bar_delete.addEventListener('click', function (event) {
+      deleteEle(tasks, subtask_contents[i].id, 'edit_subtask_bar_');
+      // deleteEle(filtered_tasks, subtask_contents[i].id, 'edit_subtask_bar_');
+    });
+    subtask_bar_edit = document.getElementById(`edit_subtask_edit_${subtask_contents[i].id}`);
+    subtask_bar_edit.addEventListener('click', function (event) {
+      editSubEle(tasks, 'edit_subtask_content_', 'edit_subtask_edit_', subtask_contents[i].id);
+      // editSubEle(filtered_tasks, 'edit_subtask_content_', 'edit_subtask_edit_', subtask_contents[i].id);
+    });
+  }
+}
+////////////////////////////////////////////////////////////////
+
+doneEditBtn.addEventListener('click', function () {
+
+  let ix1 = 0;
+  for (ix1; ix1 < tasks.length; ix1++) {
+    if (tasks[ix1].id == lastClickedId) break;
+  }
+
+  tasks[ix1].title = edit_enter_task.value;
+  tasks[ix1].category = edit_category.value;
+  tasks[ix1].priority = edit_priority.value;
+  tasks[ix1].due_date = edit_datePicker.value;
+  tasks[ix1].due_time = edit_timePicker.value;
+
+  closeEditModal();
+
+
+  let card_id = `card_${tasks[ix1].id}`;
+  let card = document.getElementById(card_id);
+  let card_title = card.querySelector('.title');
+  card_title.textContent = tasks[ix1].title;
+
+  let card_info = card.querySelector('.info');
+  let card_tagContents = tasks[ix1].tags.map(tag => tag.content);
+  let commaSeparatedTags = card_tagContents.join('</strong>, <strong>');
+
+  commaSeparatedTags = commaSeparatedTags == '' ? 'None' : `<strong>${commaSeparatedTags}</strong>`;
+  let subtasks_element = `<ul class="subtask-list">`;
+  for (let i = 0; i < tasks[ix1].subtasks.length; i++) {
+    subtasks_element += `<li>${tasks[ix1].subtasks[i].content}</li>`;
+  }
+  subtasks_element += `</ul>`;
+  let completed_status = tasks[ix1].completed ? 'Yes' : 'No';
+
+  card_info.innerHTML = `
+      <p><strong>Completed:</strong> ${completed_status}</p>
+      <p><strong>Category:</strong> ${tasks[ix1].category}</p>
+      <p><strong>Priority:</strong> ${tasks[ix1].priority}</p>
+      <p><strong>Due Date:</strong> ${tasks[ix1].due_date}</p>
+      <p><strong>Due Time:</strong> ${tasks[ix1].due_time}</p>
+      <p><strong>Subtasks:</strong> ${tasks[ix1].subtasks.length}</p>
+      ${subtasks_element}
+      <p class="card_tag"><strong>Tags:</strong> ${commaSeparatedTags}</p>
+      <div class="buttons">
+          <button id="card_edit_${tasks[ix1].id}" class="edit-button">Edit</button>
+          <button id="card_delete_${tasks[ix1].id}" class="delete-button">Delete</button>
+      </div>
+  `;
+
+  card_edit_button = document.getElementById(`card_edit_${tasks[ix1].id}`);
+  card_edit_button.addEventListener("click", (e) => {
+    editmodal.style.display = 'block';
+    lastClickedId = tasks[ix1].id;
+    updatemodalElements(tasks[ix1]);
+  });
+
+  card_delete_button = document.getElementById(`card_delete_${tasks[ix1].id}`);
+  card_delete_button.addEventListener("click", (e) => {
+    deleteEleDOM(tasks[ix1].id, "card_");
+    tasks = tasks.filter(task => task.id !== tasks[ix1].id);
+    filtered_tasks = filtered_tasks.filter(task => task.id !== tasks[ix1].id);
+  });
+});
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
 ////////////////////////////////////////////////////////////////
 
+function updatecardElements(task_) {
+  let card_id = `card_${task_.id}`;
+  let card = document.getElementById(card_id);
+
+  let card_title = card.querySelector('.title');
+  card_title.textContent = task_.title;
+
+  // let card_info = card.querySelector('.info');
+
+  // let card_tagContents = task_.tags.map(tag => tag.content);
+  // let commaSeparatedTags = card_tagContents.join('</strong>, <strong>');
+  // commaSeparatedTags = commaSeparatedTags == '' ? 'None' : `<strong>${commaSeparatedTags}</strong>`;
+
+  // let subtasks_element = `<ul class="subtask-list">`;
+  // for (let i = 0; i < task_.subtasks.length; i++) {
+  //   subtasks_element += `<li>${task_.subtasks[i].content}</li>`;
+  // }
+  // subtasks_element += `</ul>`;
+  // let completed_status = task_.completed ? 'Yes' : 'No';
+
+  // card_info.innerHTML = `
+  //     <p><strong>Completed:</strong> ${completed_status}</p>
+  //     <p><strong>Category:</strong> ${task_.category}</p>
+  //     <p><strong>Priority:</strong> ${task_.priority}</p>
+  //     <p><strong>Due Date:</strong> ${task_.due_date}</p>
+  //     <p><strong>Due Time:</strong> ${task_.due_time}</p>
+  //     <p><strong>Subtasks:</strong> ${task_.subtasks.length}</p>
+  //     ${subtasks_element}
+  //     <p class="card_tag"><strong>Tags:</strong> ${commaSeparatedTags}</p>
+  //     <div class="buttons">
+  //         <button id="card_edit_${task_.id}" class="edit-button">Edit</button>
+  //         <button id="card_delete_${task_.id}" class="delete-button">Delete</button>
+  //     </div>
+  // `;
+
+
+}
+
+let lastClickedId = 0;
 function createNewCard(task_, display_) {
   const cardContainer = display_;
 
@@ -437,12 +626,12 @@ function createNewCard(task_, display_) {
   commaSeparatedTags = commaSeparatedTags == '' ? 'None' : `<strong>${commaSeparatedTags}</strong>`;
 
 
-  subtasks_element = `<ul class="subtask-list">`;
+  let subtasks_element = `<ul class="subtask-list">`;
   for (let i = 0; i < task_.subtasks.length; i++) {
     subtasks_element += `<li>${task_.subtasks[i].content}</li>`;
   }
   subtasks_element += `</ul>`;
-  completed_status = task_.completed ? 'Yes' : 'No';
+  let completed_status = task_.completed ? 'Yes' : 'No';
   infoElement.innerHTML = `
       <p><strong>Completed:</strong> ${completed_status}</p>
       <p><strong>Category:</strong> ${task_.category}</p>
@@ -469,6 +658,9 @@ function createNewCard(task_, display_) {
   card_edit_button = document.getElementById(`card_edit_${task_.id}`);
   card_edit_button.addEventListener("click", (e) => {
     editmodal.style.display = 'block';
+    lastClickedId = task_.id;
+    updatemodalElements(task_);
+    // updatecardElements(task_);
   });
 
   card_delete_button = document.getElementById(`card_delete_${task_.id}`);
@@ -526,86 +718,13 @@ function deleteEle(task_array, id, str) {
     }
   }
 
-  console.log(id, task_array);
   removeEle = document.getElementById(str + id);
-  removeEle.remove();
+  try {
+    console.log(id, task_array);
+    removeEle.remove();
+  } catch { }
 
   // updateProgress();
-}
-
-// function alignTaskContent(task_main, task_content) {
-//   var l = task_content.innerText.split('\n').length;
-
-//   if (l < 2) {
-//     task_main.style.height = "40px";
-//     task_content.style.overflow = "none";
-//   }
-//   else if (l > 1 && l < 5) {
-//     task_main.style.height = "fit-content";
-//   } else {
-//     task_main.style.height = "100px";
-//     task_content.style.overflow = "auto";
-//   }
-// }
-
-function editEle(id, task) {
-  task_parent = document.getElementById(`task_${id}`);
-
-  task_field = document.getElementById(`task_field_${id}`);
-
-  task_content = document.getElementById(`content_${id}`);
-  task_content.contentEditable = !task_content.isContentEditable;
-
-  task_edit_button = document.getElementById(`edit_${id}`);
-
-  if (task_edit_button.textContent == 'Edit') {
-    task_parent.style.height = "100px";
-    task_field.style.height = "100%";
-    task_content.style.overflow = "auto";
-    task_edit_button.style.background = "linear-gradient(to right, #6effab, #00cc76)";
-    task_edit_button.textContent = 'Save';
-  } else {
-    task_edit_button.style.background = "linear-gradient(to right, #4dc2ff, #0080ff)";
-    task_edit_button.textContent = 'Edit';
-
-    task.title = task_content.innerText;
-
-    alignTaskContent(task_parent, task_content);
-  }
-  task_edit_button.style.webkitBackgroundClip = "text";
-  task_edit_button.style.webkitTextFillColor = "transparent";
-}
-
-function strikethroughV2(taskToUpdate, status) {
-  task_content = document.getElementById(`content_${taskToUpdate.id}`);
-  if (status == -1) {
-    task_content.style.textDecoration = 'none';
-    task_content.style.color = '#fff';
-    taskToUpdate.completed = false;
-  } else {
-    task_content.style.textDecoration = 'line-through';
-    task_content.style.color = '#009b00';
-    taskToUpdate.completed = true;
-  }
-  // updateProgress();
-}
-
-function taskEventListeners(task) {
-  task_delete_button.addEventListener("click", (e) => {
-    deleteEle(tasks, `${task.id}`, 'task_grandpa_');
-  });
-
-  task_edit_button.addEventListener("click", (e) => {
-    editEle(task.id, task);
-  });
-
-  task_status_tick.addEventListener("click", (e) => {
-    strikethroughV2(task, 1);
-  });
-
-  task_status_cross.addEventListener("click", (e) => {
-    strikethroughV2(task, -1);
-  });
 }
 
 function addTask(task_value) {
@@ -637,14 +756,18 @@ function addTask(task_value) {
       'priority': task_value[2],
       'due_date': task_value[3],
       'due_time': task_value[4],
+      'subtask_id': task_value[5],
+      'tag_id': task_value[6],
       'subtasks': tmp_subtasks,
       'tags': tmp_tags,
     }
   );
 
+  filtered_tasks = [...tasks];
+
+  console.log(tasks[tasks.length - 1]);
+
   index++;
-  // displayEle(tasks[tasks.length - 1]);
-  // taskEventListeners(tasks[tasks.length - 1]);
 
   displaySearchSortTask.style.display = 'none';
   displayTask.style.display = 'flex';
@@ -689,6 +812,8 @@ taskForm.addEventListener("submit", (e) => {
     enter_priority.value,
     enter_datePicker.value,
     enter_timePicker.value,
+    tmp_subtasks_id,
+    tmp_tags_id
   ]
 
   if (enter_task.value == "") {
@@ -942,13 +1067,16 @@ reset_search.addEventListener("click", (e) => {
 //     'tags': tmp_tags,
 //   }
 // );
-tmp_subtasks = [{ 'id': 1, 'content': 'a' }, { 'id': 2, 'content': 'b' }, { 'id': 3, 'content': 'c' }, { 'id': 4, 'content': 'd' }, { 'id': 5, 'content': 'w' },];
-tmp_tags = [{ 'id': 1, 'content': 'x' }, { 'id': 2, 'content': 'y' }, { 'id': 3, 'content': 'z' }, { 'id': 4, 'content': 'f' }];
-addTask(['abc', 'Personal', 'High', new Date().toISOString().slice(0, 8) + '30', '23:14']);
-addTask(['abcdefg', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
-addTask(['abc ave', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
-addTask(['abcdefg wed w', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
-addTask(['abcdefg qegvlkn', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14']);
+
+// tmp_subtasks = [{ 'id': 1, 'content': 'a' }, { 'id': 2, 'content': 'b' }, { 'id': 3, 'content': 'c' }, { 'id': 4, 'content': 'd' }, { 'id': 5, 'content': 'w' },];
+// tmp_tags = [{ 'id': 1, 'content': 'x' }, { 'id': 2, 'content': 'y' }, { 'id': 3, 'content': 'z' }, { 'id': 4, 'content': 'f' }];
+// addTask(['abc', 'Personal', 'High', new Date().toISOString().slice(0, 8) + '30', '23:14', 6, 5]);
+// addTask(['abcdefg', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14', 1, 1]);
+// tmp_subtasks = [{ 'id': 1, 'content': 'a' }, { 'id': 2, 'content': 'b' }, { 'id': 3, 'content': 'c' }, { 'id': 4, 'content': 'd' }, { 'id': 5, 'content': 'w' },];
+// tmp_tags = [{ 'id': 1, 'content': 'x' }, { 'id': 2, 'content': 'y' }, { 'id': 3, 'content': 'z' }, { 'id': 4, 'content': 'f' }];
+// addTask(['abc ave', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14', 6, 5]);
+// addTask(['abcdefg wed w', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14', 1, 1]);
+// addTask(['abcdefg qegvlkn', 'Personal', 'High', new Date().toISOString().slice(0, 10), '23:14', 1, 1]);
 
 let filtered_tasks = [...tasks];
 // console.log(tasks);

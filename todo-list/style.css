@@ -331,23 +331,14 @@ option {
     justify-content: space-between;
 }
 
-#tag_text,
-#tag_text_search {
+.tag_text {
     padding: 0px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     margin-right: 5px;
 }
 
-#tag_text::placeholder {
-    color: #acaaaa;
-    font-size: 20px;
-    font-family: "PT sans", sans-serif;
-    text-align: center;
-    font-weight: 100;
-}
-
-#tag_text_search::placeholder {
+.tag_text::placeholder {
     color: #acaaaa;
     font-size: 20px;
     font-family: "PT sans", sans-serif;
@@ -357,8 +348,7 @@ option {
 
 @media screen and (max-width: 768px) {
 
-    #tag_text::placeholder,
-    #tag_text_search::placeholder {
+    .tag_text::placeholder {
         font-size: 10px;
     }
 }
@@ -875,6 +865,21 @@ option {
     overflow-y: auto;
 }
 
+#editModelInput {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
+.editmodal h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.editmodal .save_submit {
+    justify-content: end;
+}
+
 .modal h1 {
     margin: 0;
 }
@@ -957,7 +962,8 @@ option {
     cursor: pointer;
 }
 
-.submit_subtasks {
+.submit_subtasks,
+.submit_edit_modal {
     position: absolute;
     bottom: 1px;
     right: 10px;
@@ -1014,7 +1020,8 @@ option {
         width: 20%;
     }
 
-    .submit_subtasks {
+    .submit_subtasks,
+    .submit_edit_modal {
         font-size: 12px;
         right: 4px;
     }

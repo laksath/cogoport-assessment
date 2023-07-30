@@ -2,8 +2,10 @@
 add_task_container = document.getElementById('taskForm');
 search_task_container = document.getElementById('taskFormSearch');
 sort_task_container = document.getElementById('taskFormSort');
+sort_task_container_desc = document.getElementById('taskFormSortDesc');
 displayTask = document.getElementById('displayTask');
 displaySearchSortTask = document.getElementById('displaySearchSortTask');
+let reset_search = document.getElementById('reset_search');
 
 const add_task_checkbox = document.getElementById('add_task_toggle');
 add_task_checkbox.addEventListener('change', function () {
@@ -38,16 +40,29 @@ sort_task_checkbox.addEventListener('change', function () {
   }
 });
 
+const sort_task_checkbox_desc = document.getElementById('sort_task_toggle_desc');
+sort_task_checkbox_desc.addEventListener('change', function () {
+  if (sort_task_checkbox_desc.checked) {
+    console.log('Checkbox is checked.');
+    sort_task_container_desc.style.display = 'block';
+  } else {
+    console.log('Checkbox is unchecked.');
+    sort_task_container_desc.style.display = 'none';
+  }
+});
+
 const display_task_checkbox = document.getElementById('display_task_toggle');
 display_task_checkbox.addEventListener('change', function () {
   if (display_task_checkbox.checked) {
     console.log('Checkbox is checked.');
     displayTask.style.display = 'flex';
     displaySearchSortTask.style.display = 'flex';
+    reset_search.style.display = 'block';
   } else {
     console.log('Checkbox is unchecked.');
     displayTask.style.display = 'none';
     displaySearchSortTask.style.display = 'none';
+    reset_search.style.display = 'none';
   }
 });
 
@@ -706,7 +721,7 @@ function drop(event) {
 let tasks = [];
 let categories = ['Personal', 'Work', 'Home', 'Family', 'Health', 'Self-growth', 'Finance', 'Travel ', 'Social ', 'Other'];
 let priority = ['Low', 'Medium', 'High'];
-var index = 1;
+let index = 1;
 let tasks_copy;
 
 function deleteEle(task_array, id, str) {
@@ -835,9 +850,9 @@ taskForm.addEventListener("submit", (e) => {
 let save_data = document.getElementById("save_data");
 save_data.addEventListener("click", (e) => {
   const arrayJson = JSON.stringify(tasks);
-  localStorage.setItem('task_data', arrayJson);
+  localStorage.setItem('todo_data', arrayJson);
   const integerString = index.toString();
-  localStorage.setItem('index', integerString);
+  localStorage.setItem('todo_index', integerString);
 
   alert("data saved sucessfully.");
 });
@@ -1017,8 +1032,105 @@ sort.addEventListener("click", (e) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+// sort desc
+backlog_sort_desc = document.getElementById("backlog_desc");
+priority_sort_desc = document.getElementById("priority_sort_desc");
+dateTime_sort_desc = document.getElementById("dateTime_sort_desc");
+category_sort_desc = document.getElementById("category_sort_desc");
+
+function toggleTextColor(element) {
+  console.log(element.style.color);
+  if (element.style.color == "white" || element.style.color == "") {
+    element.style.color = "green";
+  } else {
+    element.style.color = "white";
+  }
+}
+
+backlog_sort_desc.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+priority_sort_desc.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+dateTime_sort_desc.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+category_sort_desc.addEventListener("click", function () {
+  toggleTextColor(this);
+});
+
+let sort_desc = document.getElementById('sort_desc');
+sort_desc.addEventListener("click", (e) => {
+
+  function sortByCompleted_desc(a, b) {
+    return a.completed - b.completed;
+  }
+
+  function sortByDeadline_desc(a, b) {
+    const dateA = new Date(`${a.due_date}T${a.due_time}`);
+    const dateB = new Date(`${b.due_date}T${b.due_time}`);
+    return dateA - dateB;
+  }
+
+  function sortByPriority_desc(a, b) {
+    const priorityOrder = ['High', 'Medium', 'Low']; // Define the priority order
+    return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+  }
+
+  function sortByCategory_desc(a, b) {
+    if (a.category < b.category) {
+      return -1;
+    } else if (a.category > b.category) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
+  count = 0;
+  if (backlog_sort_desc.style.color == "green") {
+    filtered_tasks.sort(sortByCompleted_desc);
+    count++;
+  }
+
+  if (priority_sort_desc.style.color == "green") {
+    filtered_tasks.sort(sortByPriority_desc);
+    count++;
+  }
+
+  if (dateTime_sort_desc.style.color == "green") {
+    filtered_tasks.sort(sortByDeadline_desc);
+    count++;
+  }
+
+  if (category_sort_desc.style.color == "green") {
+    filtered_tasks.sort(sortByCategory_desc);
+    count++;
+  }
+
+  console.log(filtered_tasks);
+
+  if (count > 0) {
+    display_filter = 1;
+    displaySearchSortTask.style.display = 'flex';
+    displaySearchSortTask.innerHTML = '';
+    displayTask.style.display = 'none';
+    displayTask.innerHTML = '';
+    for (let i = 0; i < filtered_tasks.length; i++) {
+      createNewCard(filtered_tasks[i], displaySearchSortTask);
+    }
+  }
+
+  count = 0;
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
 //search sort reset
-let reset_search = document.getElementById('reset_search');
 reset_search.addEventListener("click", (e) => {
   filtered_tasks = [...tasks];
   display_filter = 0;
@@ -1045,12 +1157,14 @@ reset_search.addEventListener("click", (e) => {
 // tmp_tags = [{ 'id': 0, 'content': 'sfw' }, { 'id': 1, 'content': 'sfw' }, { 'id': 2, 'content': 'sfw' }, { 'id': 3, 'content': 'sfw' }];
 // addTask(info_array, -1);
 
-// const storedArrayJson = localStorage.getItem('task_data');
-// const storedArray = JSON.parse(storedArrayJson);
-
-// const storedIntegerString = localStorage.getItem('index');
-// index = parseInt(storedIntegerString);
-// tasks = storedArray;
+const storedArrayJson = localStorage.getItem('todo_data');
+const storedArray = JSON.parse(storedArrayJson);
+tasks = storedArray;
+if (tasks == null) tasks = [];
+const storedIntegerString = localStorage.getItem('todo_index');
+if (storedIntegerString == null) index = 1;
+else
+  index = parseInt(storedIntegerString);
 
 
 

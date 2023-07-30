@@ -234,7 +234,7 @@
     </form>
     <div class="toggle_switch">
         <div>
-            <p>Sort</p>
+            <p>Sort Ascending</p>
         </div>
         <label class="switch">
             <input id="sort_task_toggle" type="checkbox" name="switchSearch">
@@ -250,15 +250,31 @@
         </div>
 
         <div class="save_submit endSort">
-            <button id="sort" class='task_submit' type="button">Sort</button>
+            <button id="sort" class='task_submit' type="button">Ascending Sort</button>
         </div>
     </form>
 
-    <div class="save_submit">
-        <button id="reset_search" class='task_submit' type="button">Reset Search & Sort</button>
+    <div class="toggle_switch">
+        <div>
+            <p>Sort Descending</p>
+        </div>
+        <label class="switch">
+            <input id="sort_task_toggle_desc" type="checkbox" name="switchSearch">
+            <span class="slider round"></span>
+        </label>
     </div>
+    <form id="taskFormSortDesc">
+        <div class="save_submit">
+            <button id="backlog_desc" class='task_submit' type="button">Backlog</button>
+            <button id="priority_sort_desc" class='task_submit' type="button">Priority</button>
+            <button id="dateTime_sort_desc" class='task_submit' type="button">DateTime</button>
+            <button id="category_sort_desc" class='task_submit' type="button">Category </button>
+        </div>
 
-
+        <div class="save_submit endSort">
+            <button id="sort_desc" class='task_submit' type="button">Descending Sort</button>
+        </div>
+    </form>
     <div class="toggle_switch">
         <div>
             <p>Display</p>
@@ -267,6 +283,9 @@
             <input id="display_task_toggle" type="checkbox" name="switchSearch">
             <span class="slider round"></span>
         </label>
+    </div>
+    <div class="save_submit">
+        <button id="reset_search" class='task_submit' type="button">Reset Search & Sort</button>
     </div>
     <!-- Display Task -->
     <div id="displayTask">

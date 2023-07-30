@@ -196,12 +196,12 @@ input:checked+.slider:before {
     width: 50%;
 }
 
-.buttons .edit-button{
+.buttons .edit-button {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 
-.buttons .delete-button{
+.buttons .delete-button {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
